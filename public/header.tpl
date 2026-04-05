@@ -20,6 +20,7 @@
 
 {$headeroutput}
 
+{if $templatefile != 'login' && $templatefile != 'register'}
 <!-- Top Bar -->
 <div class="wo-topbar d-none d-md-block">
     <div class="container">
@@ -64,8 +65,10 @@
         </div>
     </div>
 </div>
+{/if}
 
 <!-- Main Navbar -->
+{if $templatefile != 'login' && $templatefile != 'register'}
 <nav class="navbar navbar-expand-lg wo-navbar sticky-top">
     <div class="container">
         <!-- Logo -->
@@ -713,7 +716,9 @@
         </div>
     </div>
 </nav>
+{/if}
 
+{if $templatefile != 'login' && $templatefile != 'register'}
 <!-- Domain Search Bar Section -->
 <div class="domain-search-section py-3" style="background-color: #eef8f0; border-bottom: 1px solid rgba(0,0,0,0.05);">
     <div class="container">
@@ -762,6 +767,7 @@
         </div>
     </div>
 </div>
+{/if}
 
 <!-- Cookie Banner -->
 <div id="cookieBanner" class="cookie-banner d-flex justify-content-between align-items-center flex-wrap gap-3">
@@ -775,7 +781,7 @@
     </div>
 </div>
 
-{if $templatefile != 'homepage'}
+{if $templatefile != 'homepage' && $templatefile != 'login' && $templatefile != 'register'}
 <section id="main-body" class="py-5">
     <div class="container">
         <div class="row">

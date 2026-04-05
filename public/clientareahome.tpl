@@ -61,6 +61,43 @@
         </div>
     </div>
 
+    <!-- AI Tools & Credits Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg rounded-5 p-4 p-lg-5 glass-card overflow-hidden position-relative">
+                <div class="position-absolute top-0 end-0 p-4 opacity-10 d-none d-lg-block">
+                    <i class="bi bi-cpu display-1 text-success"></i>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <div class="d-flex align-items-center gap-2 mb-3">
+                            <span class="badge bg-neon text-dark rounded-pill px-3 py-1 fw-bold small">NEW</span>
+                            <h4 class="fw-bold m-0">AI <span class="text-success">Tools</span> & Credits</h4>
+                        </div>
+                        <p class="text-muted lead mb-4">Access our suite of AI-powered design and branding tools. Generate logos, business names, and complete brand identities in seconds.</p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="index.php?m=aitools" class="btn btn-dark-green rounded-pill px-4 py-2 fw-bold text-neon shadow-sm">
+                                <i class="bi bi-grid-3x3-gap me-2"></i> Launch Dashboard
+                            </a>
+                            <a href="cart.php?a=add&pid={$ai_credits_pid|default:'1'}" class="btn btn-neon rounded-pill px-4 py-2 fw-bold text-dark shadow-sm">
+                                <i class="bi bi-cart-plus me-2"></i> Buy Credits
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 mt-4 mt-lg-0 text-lg-end">
+                        <div class="d-inline-flex flex-column align-items-lg-end">
+                            <span class="text-muted small fw-bold text-uppercase mb-1">Available Credits</span>
+                            <div class="display-4 fw-bold text-success mb-0">{$ai_credits|default:'0'}</div>
+                            <div class="small text-muted mt-2">
+                                <i class="bi bi-info-circle me-1"></i> Credits are added automatically after payment.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row g-4">
         <!-- Active Services Preview -->
         <div class="col-lg-8">
@@ -177,6 +214,8 @@
     .bg-neon { background-color: #00ff66; }
     .btn-neon { background-color: #00ff66; color: #0a251c; border: none; transition: all 0.3s ease; }
     .btn-neon:hover { background-color: #00e65c; }
+    .btn-dark-green { background-color: #0a251c; color: #00ff66; border: none; transition: all 0.3s ease; }
+    .btn-dark-green:hover { background-color: #0d3125; color: #00ff66; }
     .bg-success-subtle { background-color: rgba(0, 255, 102, 0.1); }
     .bg-info-subtle { background-color: rgba(13, 202, 240, 0.1); }
     .bg-danger-subtle { background-color: rgba(220, 53, 69, 0.1); }

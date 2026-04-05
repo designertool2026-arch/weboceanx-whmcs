@@ -213,6 +213,66 @@
     </table>
 </div>
 
+<!-- AI Tools & Credits -->
+<div class="mb-4 mt-5 d-flex justify-content-between align-items-center">
+    <h4 class="fw-bold text-dark m-0">AI Tools & Credits</h4>
+    <a href="index.php?m=aitools" class="text-success text-decoration-none fw-bold small">Launch AI Tools <i class="bi bi-arrow-right"></i></a>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-dark-green text-white position-relative overflow-hidden h-100">
+            <div class="position-relative z-1">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <h6 class="text-uppercase small fw-bold text-neon mb-1">Available Credits</h6>
+                        <h2 class="fw-bold mb-0" id="aiCreditsDisplay">{$ai_credits|default:'0'}</h2>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-circle p-3">
+                        <i class="bi bi-lightning-charge-fill text-neon fs-3"></i>
+                    </div>
+                </div>
+                <p class="opacity-75 mb-4">Use your credits to generate logos, business names, websites, and more with our AI-powered tools.</p>
+                <div class="d-flex gap-2">
+                    <a href="cart.php?a=add&pid=AI_CREDITS_PID" class="btn btn-neon rounded-pill px-4 fw-bold text-dark">Buy Credits</a>
+                    <a href="index.php?m=aitools" class="btn btn-outline-light rounded-pill px-4 fw-bold">Open AI Tools</a>
+                </div>
+            </div>
+            <!-- Decorative Background Element -->
+            <div class="position-absolute top-0 end-0 translate-middle-y opacity-10" style="font-size: 10rem; transform: rotate(-15deg); margin-right: -2rem;">
+                <i class="bi bi-robot"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+            <h6 class="fw-bold text-dark mb-3">Popular AI Tools</h6>
+            <div class="list-group list-group-flush">
+                <a href="index.php?m=aitools&action=logo" class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-3 py-3">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2">
+                        <i class="bi bi-palette"></i>
+                    </div>
+                    <div>
+                        <div class="fw-bold text-dark">AI Logo Generator</div>
+                        <div class="small text-muted">Create professional logos in seconds</div>
+                    </div>
+                    <span class="ms-auto badge bg-light text-muted rounded-pill">10 Credits</span>
+                </a>
+                <a href="index.php?m=aitools&action=name" class="list-group-item list-group-item-action border-0 px-0 d-flex align-items-center gap-3 py-3">
+                    <div class="bg-success bg-opacity-10 text-success rounded-circle p-2">
+                        <i class="bi bi-tag"></i>
+                    </div>
+                    <div>
+                        <div class="fw-bold text-dark">Business Name Generator</div>
+                        <div class="small text-muted">Find the perfect name for your brand</div>
+                    </div>
+                    <span class="ms-auto badge bg-light text-muted rounded-pill">5 Credits</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Recent Login Activity -->
 <div class="mb-4 mt-5">
     <h4 class="fw-bold text-dark m-0">Recent Login Activity</h4>

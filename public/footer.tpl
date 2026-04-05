@@ -1,10 +1,11 @@
-{if $templatefile != 'homepage'}
+{if $templatefile != 'homepage' && $templatefile != 'login' && $templatefile != 'register'}
             <!-- Main Content Ends Here -->
         </div>
     </div>
 </section>
 {/if}
 
+{if $templatefile != 'login' && $templatefile != 'register'}
 <footer class="bg-dark-green py-5 mt-5 text-white">
     <div class="container">
         <div class="row g-4">

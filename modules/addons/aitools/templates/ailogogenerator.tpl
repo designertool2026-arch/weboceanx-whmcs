@@ -1,3 +1,4 @@
+{* ailogogenerator.tpl - AI Logo Generator for WHMCS Addon *}
 
 <div class="container py-5">
     <div class="row justify-content-center mb-5">
@@ -8,7 +9,7 @@
             <div class="d-inline-flex align-items-center bg-light rounded-pill px-4 py-2 mt-3 shadow-sm">
                 <i class="bi bi-coin text-warning me-2 fs-5"></i>
                 <span class="fw-bold me-2">Your Credits:</span>
-                <span id="userCreditsDisplay" class="text-success fw-bold">Loading...</span>
+                <span id="userCreditsDisplay" class="text-success fw-bold">{$ai_credits|default:'0'}</span>
             </div>
         </div>
     </div>
@@ -128,5 +129,115 @@
             </div>
         </div>
     </div>
-
 </div>
+
+<script type="importmap">
+  {
+    "imports": {
+      "@google/genai": "https://esm.run/@google/genai"
+    }
+  }
+</script>
+
+<script type="module">
+import { GoogleGenAI } from "@google/genai";
+
+const apiKey = "{$gemini_api_key}";
+if (!apiKey) {
+    alert("Gemini API Key is missing. Please set GEMINI_API_KEY in your environment variables.");
+}
+const ai = new GoogleGenAI({ apiKey });
+
+document.getElementById('logoGeneratorForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const brandName = document.getElementById('brandName').value;
+    const logoStyle = document.querySelector('input[name="logoStyle"]:checked').value;
+    const colorPalette = document.getElementById('colorPalette').value;
+    const layoutVariation = document.getElementById('layoutVariation').value;
+    
+    // UI States
+    const emptyState = document.getElementById('emptyState');
+    const loadingState = document.getElementById('loadingState');
+    const resultState = document.getElementById('resultState');
+    const generatedLogoImg = document.getElementById('generatedLogoImg');
+    
+    emptyState.classList.add('d-none');
+    loadingState.classList.remove('d-none');
+    resultState.classList.add('d-none');
+    
+    try {
+        // Deduct credits first
+        const response = await fetch('index.php?m=aitools&action=deduct', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'amount=10'
+        });
+        const creditResult = await response.json();
+        
+        if (creditResult.status !== 'success') {
+            alert(creditResult.message);
+            loadingState.classList.add('d-none');
+            emptyState.classList.remove('d-none');
+            return;
+        }
+        
+        // Update credits display
+        document.getElementById('userCreditsDisplay').innerText = creditResult.remaining;
+
+        // Generate Logo using Gemini
+        const prompt = `Generate a professional logo for a brand named "${brandName}". 
+        Style: ${logoStyle}. 
+        Color Palette: ${colorPalette}. 
+        Layout: ${layoutVariation}. 
+        The logo should be modern, clean, and suitable for high-end branding. 
+        Provide the logo as a high-quality image.`;
+
+        const result = await ai.models.generateContent({
+            model: "gemini-2.5-flash-image",
+            contents: { parts: [{ text: prompt }] },
+            config: {
+                imageConfig: {
+                    aspectRatio: "1:1"
+                }
+            }
+        });
+
+        let imageUrl = "";
+        for (const part of result.candidates[0].content.parts) {
+            if (part.inlineData) {
+                imageUrl = `data:image/png;base64,${part.inlineData.data}`;
+                break;
+            }
+        }
+
+        if (imageUrl) {
+            generatedLogoImg.src = imageUrl;
+            loadingState.classList.add('d-none');
+            resultState.classList.remove('d-none');
+        } else {
+            throw new Error("No image generated");
+        }
+
+    } catch (error) {
+        console.error("Logo Generation Error:", error);
+        alert("An error occurred during logo generation. Please try again.");
+        loadingState.classList.add('d-none');
+        emptyState.classList.remove('d-none');
+    }
+});
+
+// Download PNG
+document.getElementById('downloadPngBtn').addEventListener('click', () => {
+    const img = document.getElementById('generatedLogoImg');
+    const link = document.createElement('a');
+    link.href = img.src;
+    link.download = `${document.getElementById('brandName').value}_logo.png`;
+    link.click();
+});
+
+// Export SVG (Mock for now, as Gemini generates raster)
+document.getElementById('exportSvgBtn').addEventListener('click', () => {
+    alert("Vector export (SVG) is currently in beta. Your PNG download includes high-resolution transparency.");
+});
+</script>
