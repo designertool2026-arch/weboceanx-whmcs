@@ -1,0 +1,10 @@
+name: "WebOceanX"
+description: "A premium, modern WHMCS theme with a dark green and neon green aesthetic."
+author: "WebOceanX Team"
+version: "1.0.0"
+whmcsversion: "8.0"
+screenshot: "img/screenshot.png"
+variables:
+  primary: "#114232"
+  secondary: "#00ff66"
+  dark: "#0a251c"
