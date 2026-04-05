@@ -167,6 +167,8 @@
             <div class="card border-0 shadow-sm rounded-4 p-4">
                 <h5 class="fw-bold mb-4">Quick Actions</h5>
                 <div class="d-grid gap-2">
+                    <a href="clientarea.php?action=services" class="btn btn-light rounded-pill text-start px-4 py-2"><i class="bi bi-box-seam me-2 text-success"></i> View All Services</a>
+                    <a href="clientarea.php?action=domains" class="btn btn-light rounded-pill text-start px-4 py-2"><i class="bi bi-globe me-2 text-success"></i> Manage Domains</a>
                     <a href="cart.php" class="btn btn-light rounded-pill text-start px-4 py-2"><i class="bi bi-plus-circle me-2 text-success"></i> Order New Service</a>
                     <a href="cart.php?a=add&domain=register" class="btn btn-light rounded-pill text-start px-4 py-2"><i class="bi bi-globe me-2 text-success"></i> Register New Domain</a>
                     <a href="submitticket.php" class="btn btn-light rounded-pill text-start px-4 py-2"><i class="bi bi-ticket-perforated me-2 text-success"></i> Open Support Ticket</a>

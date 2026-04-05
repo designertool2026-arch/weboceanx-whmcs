@@ -1,83 +1,93 @@
-<div class="row justify-content-center py-5">
-    <div class="col-md-8 col-lg-6">
-        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-            <div class="card-header bg-dark-green text-white p-5 text-center">
-                <h2 class="fw-bold mb-3 text-neon">Create Account</h2>
-                <p class="opacity-75 mb-0">Join Web Oceanx today and start your hosting journey.</p>
+<div class="auth-wrapper">
+    <div class="auth-form-side">
+        <div class="auth-logo">
+            <a href="{$WEB_ROOT}/index.php">
+                <img src="{$WEB_ROOT}/templates/{$template}/img/logo.png" alt="Web Oceanx" onerror="this.src='https://via.placeholder.com/200x50?text=WEB+OCEANX'">
+            </a>
+        </div>
+
+        <h1 class="auth-heading">Sign Up</h1>
+
+        {if $errormessage}
+            <div class="alert alert-danger rounded-4 border-0 small mb-4">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                {$errormessage}
             </div>
-            <div class="card-body p-5">
-                <form method="post" action="register.php" role="form">
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">First Name</label>
-                            <input type="text" name="firstname" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="First Name" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Last Name</label>
-                            <input type="text" name="lastname" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="Last Name" required>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="form-label fw-bold">Email Address</label>
-                            <input type="email" name="email" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="Email Address" required>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="form-label fw-bold">Phone Number</label>
-                            <input type="tel" name="phonenumber" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="Phone Number" required>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="form-label fw-bold">Company Name (Optional)</label>
-                            <input type="text" name="companyname" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="Company Name">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="form-label fw-bold">Address</label>
-                            <input type="text" name="address1" class="form-control bg-light border-0 rounded-pill px-4 py-2 mb-3" placeholder="Address 1" required>
-                            <input type="text" name="address2" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="Address 2 (Optional)">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">City</label>
-                            <input type="text" name="city" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="City" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">State</label>
-                            <input type="text" name="state" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="State" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Postcode</label>
-                            <input type="text" name="postcode" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="Postcode" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Country</label>
-                            <select name="country" class="form-select bg-light border-0 rounded-pill px-4 py-2" required>
-                                <option value="US">United States</option>
-                                <option value="GB">United Kingdom</option>
-                                <option value="CA">Canada</option>
-                                <!-- Add more countries as needed -->
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Password</label>
-                            <input type="password" name="password" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="Password" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Confirm Password</label>
-                            <input type="password" name="confirmpassword" class="form-control bg-light border-0 rounded-pill px-4 py-2" placeholder="Confirm Password" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" id="termsCheck" required>
-                        <label class="form-check-label small text-muted" for="termsCheck">
-                            I agree to the <a href="#" class="text-success text-decoration-none fw-bold">Terms of Service</a> and <a href="#" class="text-success text-decoration-none fw-bold">Privacy Policy</a>.
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-neon w-100 rounded-pill py-3 fw-bold shadow-lg">Register Account</button>
-                </form>
-                
-                <div class="text-center mt-5">
-                    <p class="text-muted mb-0">Already have an account? <a href="login.php" class="text-success text-decoration-none fw-bold">Login Here</a></p>
+        {/if}
+
+        <form method="post" action="register.php" role="form">
+            <div class="row g-3">
+                <div class="col-md-6 mb-3">
+                    <label class="auth-label">First name *</label>
+                    <input type="text" name="firstname" class="auth-input" placeholder="Enter first name" required value="{$clientfirstname}">
                 </div>
+                <div class="col-md-6 mb-3">
+                    <label class="auth-label">Last name *</label>
+                    <input type="text" name="lastname" class="auth-input" placeholder="Enter last name" required value="{$clientlastname}">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="auth-label">Email *</label>
+                <input type="email" name="email" class="auth-input" placeholder="Enter email address" required value="{$clientemail}">
+            </div>
+
+            <div class="mb-4">
+                <label class="auth-label">Password *</label>
+                <div class="position-relative">
+                    <input type="password" name="password" id="inputPassword" class="auth-input" placeholder="Enter password" required>
+                    <button type="button" class="btn position-absolute end-0 top-50 translate-middle-y border-0" onclick="togglePassword()">
+                        <i class="bi bi-eye-slash text-muted" id="toggleIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-check form-switch mb-4 d-flex align-items-center gap-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="marketingPersonalization" name="marketing" checked style="width: 3rem; height: 1.5rem;">
+                <label class="form-check-label small text-muted" for="marketingPersonalization">
+                    Please tick this box if you are happy for us to personalize your marketing
+                </label>
+            </div>
+
+            <button type="submit" class="auth-btn-gradient">Sign Up</button>
+
+            <div class="auth-footer-text">
+                Already have an account? <a href="login.php">Login</a>
+            </div>
+        </form>
+
+        <div class="mt-auto pt-5 text-center text-muted small">
+            <div class="d-flex justify-content-center gap-3 mb-2">
+                <a href="#" class="text-muted text-decoration-none">Cookie Settings</a>
+                <span>|</span>
+                <a href="#" class="text-muted text-decoration-none">Give Feedback</a>
+            </div>
+            hosting.com Panel v0.4.21 | Copyright 2026
+        </div>
+    </div>
+
+    <div class="auth-image-side">
+        <!-- Same decoration as login for consistency -->
+        <div class="auth-image-content">
+            <div class="auth-marketing-text">
+                <h2>Join the Web Oceanx community today.</h2>
+                <p>Experience the next generation of cloud hosting with <strong>unmatched performance</strong> and <strong>24/7 support</strong>.</p>
+                <a href="#" class="auth-status-link">Check for service updates here status.hosting.com</a>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+function togglePassword() {
+    const input = document.getElementById('inputPassword');
+    const icon = document.getElementById('toggleIcon');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('bi-eye-slash', 'bi-eye');
+    } else {
+        input.type = 'password';
+        icon.classList.replace('bi-eye', 'bi-eye-slash');
+    }
+}
+</script>

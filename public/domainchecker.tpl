@@ -14,13 +14,20 @@
         <div class="col-lg-10">
             <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5 bg-dark-green text-white overflow-hidden position-relative">
                 <div class="position-relative z-index-2">
-                    <form method="post" action="domainchecker.php" class="row g-3">
+                    <form method="post" action="domainchecker.php" class="row g-3 position-relative">
                         <div class="col-md-9">
-                            <div class="input-group input-group-lg">
+                            <div class="input-group input-group-lg position-relative">
                                 <span class="input-group-text bg-white border-0 rounded-start-pill ps-4 pe-3">
                                     <i class="bi bi-search text-muted"></i>
                                 </span>
-                                <input type="text" name="domain" class="form-control border-0 rounded-end-pill py-3 pe-4" placeholder="Enter your domain name (e.g. example.com)" value="{$domain}" required autofocus>
+                                <input type="text" name="domain" id="domainCheckerInput" class="form-control border-0 rounded-end-pill py-3 pe-4" placeholder="Enter your domain name (e.g. example.com)" value="{$domain}" required autofocus autocomplete="off">
+                                
+                                <!-- TLD Suggestions Dropdown -->
+                                <div id="checkerTldSuggestions" class="position-absolute w-100 bg-white shadow rounded mt-1 d-none" style="top: 100%; left: 0; z-index: 1000; max-height: 250px; overflow-y: auto; border: 1px solid #eee; color: #333;">
+                                    <ul class="list-group list-group-flush" id="checkerTldSuggestionsList">
+                                        <!-- Suggestions will be populated here by JS -->
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -135,15 +142,5 @@
         </div>
     </div>
 </div>
-
-<style>
-    .bg-dark-green { background-color: #0a251c; }
-    .text-neon { color: #00ff66; }
-    .btn-neon { background-color: #00ff66; color: #0a251c; border: none; transition: all 0.3s ease; }
-    .btn-neon:hover { background-color: #00e65c; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0, 255, 102, 0.3); }
-    .hover-lift { transition: transform 0.2s ease; }
-    .hover-lift:hover { transform: translateY(-10px); }
-    .z-index-2 { z-index: 2; }
-</style>
 
 {include file="$template/footer.tpl"}

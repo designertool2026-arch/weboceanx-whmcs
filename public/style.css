@@ -1,8 +1,281 @@
-/* Dark Mode Styles */
-body.dark-mode {
-    background-color: #0f172a;
-    color: #e2e8f0;
+/* Authentication Split Layout */
+.auth-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #fff;
+    overflow: hidden;
 }
+
+.auth-form-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.auth-image-side {
+    flex: 1;
+    background: linear-gradient(135deg, #114232 0%, #00ff66 100%);
+    position: relative;
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .auth-image-side {
+        display: block;
+    }
+}
+
+.auth-logo {
+    margin-bottom: 2rem;
+}
+
+.auth-logo img {
+    max-height: 50px;
+}
+
+.auth-heading {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    color: #1a1a1a;
+}
+
+.auth-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.auth-input {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: #00ff66;
+}
+
+.auth-input-error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.auth-btn-gradient {
+    background: linear-gradient(90deg, #a7f3d0 0%, #d9f99d 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    width: 100%;
+    margin-top: 1.5rem;
+    transition: opacity 0.2s;
+}
+
+.auth-btn-gradient:hover {
+    opacity: 0.9;
+}
+
+.auth-footer-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.auth-footer-text a {
+    color: #1a1a1a;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.auth-forgot-link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #1a1a1a;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Image Side Content */
+.auth-image-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: white;
+}
+
+.auth-marketing-img {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.auth-card-overlay {
+    position: absolute;
+    top: 35%;
+    left: 15%;
+    background: #0a251c;
+    padding: 1.5rem;
+    border-radius: 16px;
+    color: white;
+    width: 200px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.auth-notification {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    background: #0a251c;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.auth-marketing-text h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.auth-marketing-text p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.auth-status-link {
+    color: white;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Recovery Options */
+.recovery-option {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.recovery-option:hover {
+    background-color: #f9fafb;
+}
+
+.recovery-option i {
+    font-size: 1.5rem;
+    color: #4b5563;
+}
+
+.recovery-option-text h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.recovery-option-text p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.recovery-radio-group {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.recovery-radio-item {
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.recovery-radio-item:last-child {
+    border-bottom: none;
+}
+
+.recovery-radio-item input {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.recovery-info-box {
+    background-color: #ecfdf5;
+    border: 1px solid #10b981;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #065f46;
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
+}
+
+.recovery-warning-box {
+    background-color: #fffbeb;
+    border: 1px solid #f59e0b;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #92400e;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Hide standard header/footer on auth pages */
+body.auth-page .wo-topbar,
+body.auth-page .wo-navbar,
+body.auth-page footer,
+body.auth-page .cookie-banner,
+body.auth-page #main-body {
+    display: none !important;
+}
+
+body.auth-page {
+    padding-top: 0 !important;
+}
+
 body.dark-mode .bg-light, body.dark-mode .bg-white {
     background-color: #1e293b !important;
     color: #e2e8f0 !important;
@@ -128,13 +401,15 @@ body.dark-mode .accordion-button::after {
  */
 
 :root {
-    --wo-dark-green: #0a251c;
+    --wo-primary-green: #114232;
     --wo-neon-green: #00ff66;
     --wo-neon-green-hover: #00e65c;
+    --wo-dark-green: #0a251c;
     --wo-text-dark: #1a1a1a;
     --wo-gray-light: #f8f9fa;
     --wo-border-color: #eaeaea;
     --wo-white: #ffffff;
+    --wo-font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --wo-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     --wo-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
     --wo-transition: all 0.3s ease;
@@ -142,7 +417,7 @@ body.dark-mode .accordion-button::after {
 
 /* Global Styles */
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--wo-font-primary);
     color: var(--wo-text-dark);
     background-color: var(--wo-white);
     line-height: 1.6;
@@ -269,6 +544,109 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
+.mega-menu-col-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    color: var(--wo-text-dark);
+}
+
+.mega-menu-item .arrow {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    color: var(--wo-dark-green);
+}
+
+.mega-menu-item:hover .arrow {
+    opacity: 1;
+    transform: translate(5px, -50%);
+}
+
+.mega-menu-banner {
+    background-color: #0d3b26;
+    border-radius: 12px;
+    padding: 2rem;
+    color: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.mega-menu-banner h3 {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.mega-menu-banner p {
+    color: #a3b8b0;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.mega-menu-banner .banner-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.2s ease;
+}
+
+.mega-menu-banner .banner-link:hover {
+    gap: 0.8rem;
+    color: white;
+}
+
+/* Domain Promos */
+.wo-domain-promos {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.wo-promo-card {
+    background: white;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.wo-promo-card .tld {
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.wo-promo-card .tld.com { color: #0056b3; }
+.wo-promo-card .tld.net { color: #d39e00; }
+.wo-promo-card .tld.org { color: #0056b3; }
+
+.wo-promo-card .details {
+    line-height: 1.2;
+}
+
+.wo-promo-card .price {
+    font-weight: 700;
+    color: var(--wo-text-dark);
+}
+
+.wo-promo-card .subtext {
+    font-size: 0.65rem;
+    color: #6c757d;
+}
+
 /* Buttons */
 .btn-neon {
     background-color: var(--wo-neon-green);
@@ -362,6 +740,42 @@ h1, h2, h3, h4, h5, h6 {
     .display-5 {
         font-size: 2rem;
     }
+
+    .hero-section {
+        padding: 4rem 0 4rem 0;
+        text-align: center;
+    }
+
+    .hosting-cards-row {
+        margin-top: 2rem;
+    }
+
+    .stats-section {
+        padding: 2rem !important;
+        margin: 2rem 0;
+    }
+
+    .support-section {
+        text-align: center;
+    }
+
+    .support-section .col-lg-6 {
+        padding: 2rem !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .display-5 {
+        font-size: 1.75rem;
+    }
+
+    .card-header, .card-body {
+        padding: 1.5rem !important;
+    }
 }
 
 /* Utility Classes */
@@ -375,7 +789,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Homepage Specific Styles */
 .hero-section {
-    background: linear-gradient(135deg, var(--wo-dark-green) 0%, #114232 100%);
+    background: linear-gradient(135deg, var(--wo-primary-green) 0%, #114232 100%);
     padding: 4rem 0 8rem 0;
     position: relative;
     overflow: hidden;

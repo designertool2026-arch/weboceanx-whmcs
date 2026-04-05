@@ -1,11 +1,11 @@
 {* homepage.tpl for WHMCS theme "weboceanx" - Redesigned & Enhanced *}
 
 <!-- Hero Section -->
-<div class="hero-section text-white">
+<div class="hero-section text-white py-5 py-lg-0">
     <div class="container">
         <!-- Hero Content -->
-        <div class="row align-items-center mt-4">
-            <div class="col-lg-6">
+        <div class="row align-items-center mt-lg-4">
+            <div class="col-lg-6 text-center text-lg-start">
                 <div class="mb-3">
                     <span class="badge bg-light text-dark me-2">WEB OCEANX HOSTING</span>
                     <span class="text-warning">★★★★★</span> <small class="ms-1">4.7/5 Based on reviews</small>
@@ -15,7 +15,7 @@
                 <a href="cart.php" class="btn btn-neon btn-lg px-4 py-3 rounded-pill mb-4">Start building</a>
                 
                 <!-- Social Share -->
-                <div class="social-share mt-2">
+                <div class="social-share mt-2 justify-content-center justify-content-lg-start">
                     <span class="me-3 small opacity-75 fw-bold">Share:</span>
                     <a href="https://facebook.com/sharer/sharer.php?u=#" target="_blank" title="Share on Facebook"><i class="bi bi-facebook"></i></a>
                     <a href="https://twitter.com/intent/tweet?url=#&text=Check%20out%20Web%20Oceanx" target="_blank" title="Share on Twitter"><i class="bi bi-twitter-x"></i></a>
@@ -108,41 +108,41 @@
 </section>
 
 <!-- Hosting Types Cards (Overlapping Hero) -->
-<div id="hosting" class="container hosting-cards-row mb-5">
+<div id="hosting" class="container hosting-cards-row mb-5 mt-n5 mt-lg-0">
     <div class="row g-4">
         <div class="col-md-6 col-lg-3">
-            <div class="hosting-card bg-dark-green shadow-lg">
+            <div class="hosting-card bg-dark-green shadow-lg h-100">
                 <h5 class="fw-bold mb-4">Fast Shared Hosting</h5>
                 <p class="small opacity-75 mb-1">Starting at</p>
                 <h2 class="display-6 fw-bold mb-4">$3.99</h2>
-                <a href="cart.php?gid=1" class="text-neon text-decoration-none fw-bold">Find out more <i class="bi bi-arrow-right"></i></a>
+                <a href="cart.php?gid=1" class="text-neon text-decoration-none fw-bold mt-auto d-block">Find out more <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
         <div class="col-md-6 col-lg-3">
-            <div class="hosting-card bg-primary-green shadow-lg position-relative">
+            <div class="hosting-card bg-primary-green shadow-lg position-relative h-100">
                 <div class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning text-dark px-3 py-2 fw-bold shadow-sm" style="font-size: 0.75rem; z-index: 2;">
                     <i class="bi bi-star-fill me-1"></i> Most Popular
                 </div>
                 <h5 class="fw-bold mb-4 mt-2">Managed cPanel VPS</h5>
                 <p class="small opacity-75 mb-1">Starting at</p>
                 <h2 class="display-6 fw-bold mb-4">$28.75</h2>
-                <a href="cart.php?gid=2" class="text-neon text-decoration-none fw-bold">Find out more <i class="bi bi-arrow-right"></i></a>
+                <a href="cart.php?gid=2" class="text-neon text-decoration-none fw-bold mt-auto d-block">Find out more <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
         <div class="col-md-6 col-lg-3">
-            <div class="hosting-card bg-light-green shadow-lg">
+            <div class="hosting-card bg-light-green shadow-lg h-100">
                 <h5 class="fw-bold mb-4">Reseller Accounts</h5>
                 <p class="small text-muted mb-1">Starting at</p>
                 <h2 class="display-6 fw-bold mb-4">$20.42</h2>
-                <a href="cart.php?gid=3" class="text-success text-decoration-none fw-bold">Find out more <i class="bi bi-arrow-right"></i></a>
+                <a href="cart.php?gid=3" class="text-success text-decoration-none fw-bold mt-auto d-block">Find out more <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
         <div class="col-md-6 col-lg-3">
-            <div class="hosting-card bg-white shadow-lg">
+            <div class="hosting-card bg-white shadow-lg h-100">
                 <h5 class="fw-bold mb-4">Hosting for WordPress</h5>
                 <p class="small text-muted mb-1">Starting at</p>
                 <h2 class="display-6 fw-bold mb-4">$1.00</h2>
-                <a href="cart.php?gid=4" class="text-success text-decoration-none fw-bold">Find out more <i class="bi bi-arrow-right"></i></a>
+                <a href="cart.php?gid=4" class="text-success text-decoration-none fw-bold mt-auto d-block">Find out more <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
     </div>
