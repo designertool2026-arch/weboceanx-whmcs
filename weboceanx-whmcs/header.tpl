@@ -9,14 +9,504 @@
     <!-- Bootstrap 5 CSS & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{$WEB_ROOT}/templates/{$template}/style.css">
-
-    <script type="module" src="{$WEB_ROOT}/templates/{$template}/firebase-logic.js"></script>
-    <script src="{$WEB_ROOT}/templates/{$template}/script.js"></script>
 
     {$headoutput}
+
+    <style>
+        .sidebar-sticky {
+            position: sticky;
+            top: 100px;
+            z-index: 100;
+        }
+
+        .wo-navbar.navbar-scrolled {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.98) !important;
+        }
+
+        body.dark-mode .wo-navbar.navbar-scrolled {
+            background-color: rgba(15, 23, 42, 0.98) !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        body.dark-mode .bg-light, body.dark-mode .bg-white {
+            background-color: #1e293b !important;
+            color: #e2e8f0 !important;
+        }
+        body.dark-mode .offcanvas {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        body.dark-mode .offcanvas-header {
+            border-bottom-color: #1e293b;
+        }
+        body.dark-mode .offcanvas .dropdown-menu {
+            background-color: #1e293b;
+        }
+        body.dark-mode .offcanvas .dropdown-item {
+            color: #e2e8f0;
+        }
+        body.dark-mode .offcanvas .dropdown-item:hover {
+            background-color: #334155;
+        }
+        body.dark-mode .offcanvas .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        body.dark-mode .offcanvas .border-bottom {
+            border-bottom-color: #1e293b !important;
+        }
+        body.dark-mode .offcanvas .bg-light {
+            background-color: #1e293b !important;
+        }
+        body.dark-mode .text-dark, body.dark-mode .text-muted {
+            color: #cbd5e1 !important;
+        }
+        body.dark-mode .card, body.dark-mode .accordion-item, body.dark-mode .dashboard-stat-card, body.dark-mode .table-custom {
+            background-color: #1e293b !important;
+            border-color: #334155 !important;
+            color: #e2e8f0 !important;
+        }
+        body.dark-mode .table-custom th {
+            background-color: #0f172a !important;
+            color: #94a3b8 !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .table-custom td {
+            border-color: #334155 !important;
+            color: #e2e8f0 !important;
+        }
+        body.dark-mode .list-group-item {
+            background-color: #1e293b !important;
+            color: #e2e8f0 !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .list-group-item:hover {
+            background-color: #334155 !important;
+        }
+        body.dark-mode .list-group-item.active {
+            background-color: #22c55e !important;
+            color: #fff !important;
+        }
+        body.dark-mode .btn-white {
+            background-color: #1e293b !important;
+            color: #e2e8f0 !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .btn-white:hover {
+            background-color: #334155 !important;
+        }
+        body.dark-mode .accordion-button {
+            background-color: #1e293b;
+            color: #e2e8f0;
+        }
+        body.dark-mode .accordion-button:not(.collapsed) {
+            background-color: #334155;
+            color: #4ade80;
+        }
+        body.dark-mode .accordion-button::after {
+            filter: invert(1);
+        }
+        body.dark-mode .wo-navbar, body.dark-mode .wo-topbar, body.dark-mode .wo-domain-bar, body.dark-mode .domain-search-section {
+            background-color: #1e293b !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .nav-link, body.dark-mode .navbar-brand, body.dark-mode .nav-icons a {
+            color: #e2e8f0 !important;
+        }
+        body.dark-mode .mega-menu {
+            background-color: #1e293b !important;
+            border-color: #334155 !important;
+        }
+        body.dark-mode .mega-menu-item {
+            background-color: #0f172a !important;
+            color: #e2e8f0 !important;
+        }
+        body.dark-mode .mega-menu-item:hover {
+            background-color: #1e293b !important;
+        }
+        body.dark-mode .mega-menu-col-title {
+            color: #4ade80 !important;
+        }
+        
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            background: #112520;
+            color: white;
+            padding: 1rem 2rem;
+            z-index: 9999;
+            transition: bottom 0.5s ease-in-out;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+        }
+        .cookie-banner.show {
+            bottom: 0;
+        }
+
+        /* Web Oceanx Header Styles */
+        :root {
+            --wo-neon-green: #4ade80; /* Adjusted to match screenshot */
+            --wo-text-dark: #1a1a1a;
+            --wo-gray-light: #f8f9fa;
+            --wo-border-color: #eaeaea;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--wo-text-dark);
+            padding-top: 0;
+        }
+
+        /* Top Bar */
+        .wo-topbar {
+            background-color: var(--wo-gray-light);
+            border-bottom: 1px solid var(--wo-border-color);
+            padding: 0.4rem 0;
+            font-size: 0.8rem;
+        }
+
+        .wo-topbar .contact-info {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .wo-topbar a {
+            color: var(--wo-text-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .wo-topbar a:hover {
+            color: var(--wo-neon-green);
+        }
+
+        /* Main Navigation */
+        .wo-navbar {
+            background-color: #ffffff;
+            padding: 1rem 0;
+            /* Removed shadow to match screenshot */
+        }
+
+        .wo-navbar .navbar-brand {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--wo-text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .wo-navbar .nav-link {
+            color: var(--wo-text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 1.2rem !important;
+            transition: color 0.2s ease;
+        }
+
+        .wo-navbar .nav-link:hover {
+            color: var(--wo-neon-green);
+        }
+
+        .wo-navbar .badge-new {
+            background-color: var(--wo-neon-green);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            margin-left: 0.25rem;
+            vertical-align: middle;
+        }
+
+        .wo-navbar .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .wo-navbar .nav-icons a {
+            color: var(--wo-text-dark);
+            font-size: 1.3rem;
+            transition: color 0.2s ease;
+        }
+
+        .wo-navbar .nav-icons a:hover {
+            color: var(--wo-neon-green);
+        }
+
+        /* Domain Search Bar (Below Nav) */
+        .wo-domain-bar {
+            background-color: #e8f5e9; /* Light green matching screenshot */
+            padding: 1rem 0;
+        }
+
+        .wo-domain-form {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .wo-domain-input {
+            flex-grow: 1;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            color: #6b7280;
+        }
+        
+        .wo-domain-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .wo-domain-btn {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .wo-domain-btn:hover {
+            opacity: 0.9;
+        }
+
+        .wo-domain-promos {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .wo-promo-card {
+            background: white;
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .wo-promo-card .tld {
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .wo-promo-card .tld.com { color: #0056b3; }
+        .wo-promo-card .tld.net { color: #d39e00; }
+        .wo-promo-card .tld.org { color: #0056b3; }
+
+        .wo-promo-card .details {
+            line-height: 1.2;
+        }
+
+        .wo-promo-card .price {
+            font-weight: 700;
+            color: var(--wo-text-dark);
+        }
+        
+        .wo-promo-card .subtext {
+            font-size: 0.65rem;
+            color: #6c757d;
+        }
+
+        /* Mega Menu Styles */
+        .wo-navbar .nav-item.dropdown {
+            position: static !important;
+        }
+        
+        .wo-navbar .mega-menu {
+            width: 100%;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: none;
+            border-top: 1px solid var(--wo-border-color);
+            background-color: #ffffff;
+        }
+
+        .mega-menu-col-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: var(--wo-text-dark);
+        }
+
+        .mega-menu-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.75rem;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+            color: var(--wo-text-dark);
+            margin-bottom: 0.5rem;
+            background-color: #f8f9fa;
+            position: relative;
+        }
+
+        .mega-menu-item:hover {
+            background-color: #f0fdf4; /* Light neon green */
+        }
+
+        .mega-menu-item .icon-wrapper {
+            width: 40px;
+            height: 40px;
+            background-color: #112520;
+            color: #4ade80;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .mega-menu-item:hover .icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .mega-menu-item .content {
+            flex-grow: 1;
+        }
+
+        .mega-menu-item .title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+            display: block;
+        }
+
+        .mega-menu-item .desc {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-bottom: 0;
+            line-height: 1.3;
+        }
+
+        .mega-menu-item .arrow {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            color: #112520;
+        }
+
+        .mega-menu-item:hover .arrow {
+            opacity: 1;
+            transform: translate(5px, -50%);
+        }
+
+        .mega-menu-banner {
+            background-color: #0d3b26; /* Dark green */
+            border-radius: 12px;
+            padding: 2rem;
+            color: white;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mega-menu-banner h3 {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .mega-menu-banner p {
+            color: #a3b8b0;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .mega-menu-banner .banner-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.2s ease;
+        }
+
+        .mega-menu-banner .banner-link:hover {
+            gap: 0.8rem;
+            color: white;
+        }
+
+        @media (min-width: 992px) {
+            .wo-navbar .dropdown:hover .dropdown-menu {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            .wo-navbar .dropdown-menu {
+                display: block;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(10px);
+                transition: all 0.3s ease;
+                margin-top: 0;
+            }
+        }
+        
+        @media (max-width: 991.98px) {
+            .wo-navbar .mega-menu {
+                padding: 1rem;
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+            }
+            .mega-menu-banner {
+                margin-top: 1rem;
+            }
+            .wo-domain-form {
+                flex-direction: column;
+                margin-bottom: 1.5rem;
+            }
+            .wo-domain-input, .wo-domain-btn {
+                width: 100%;
+            }
+            .wo-domain-promos {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .wo-topbar .contact-info {
+                justify-content: center;
+            }
+        }
+    </style>
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" defer></script>
 </head>
-<body data-phone-cc-input="{$phoneNumberInputStyle}" class="{if $templatefile == 'login' || $templatefile == 'register' || $templatefile == 'passwordreset'}auth-page{/if}">
+<body data-phone-cc-input="{$phoneNumberInputStyle}">
 
 {$headeroutput}
 
@@ -79,80 +569,73 @@
         </a>
 
         <!-- Mobile Toggle -->
-        <button class="navbar-toggler border-0 shadow-none d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
-            <i class="bi bi-list fs-1 text-dark"></i>
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <i class="bi bi-list fs-1"></i>
         </button>
 
-        <!-- Off-canvas Mobile Menu -->
-        <div class="offcanvas offcanvas-start bg-dark-green text-white" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
-            <div class="offcanvas-header border-bottom border-white border-opacity-10 py-4">
-                <h5 class="offcanvas-title fw-bold d-flex align-items-center gap-2" id="mobileMenuLabel">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#00ff66"/>
-                        <path d="M2 17L12 22L22 17" stroke="#00ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="#00ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Offcanvas Navbar -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 class="offcanvas-title fw-bold" id="offcanvasNavbarLabel">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2 text-success">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     Web Oceanx
                 </h5>
-                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body p-0">
-                <div class="p-4">
-                    <div class="mb-4">
-                        <h6 class="text-uppercase small fw-bold text-neon opacity-75 mb-3">Main Navigation</h6>
-                        <div class="list-group list-group-flush bg-transparent">
-                            <a href="{$WEB_ROOT}/index.php" class="list-group-item list-group-item-action bg-transparent text-white border-0 px-0 py-3 d-flex align-items-center gap-3">
-                                <i class="bi bi-house-door fs-5"></i> Home
-                            </a>
-                            <a href="{$WEB_ROOT}/cart.php?a=add&domain=register" class="list-group-item list-group-item-action bg-transparent text-white border-0 px-0 py-3 d-flex align-items-center gap-3">
-                                <i class="bi bi-globe2 fs-5"></i> Domains
-                            </a>
-                            <a href="{$WEB_ROOT}/store/hosting" class="list-group-item list-group-item-action bg-transparent text-white border-0 px-0 py-3 d-flex align-items-center gap-3">
-                                <i class="bi bi-hdd-network fs-5"></i> Hosting
-                            </a>
-                            <a href="{$WEB_ROOT}/domainservices.php" class="list-group-item list-group-item-action bg-transparent text-white border-0 px-0 py-3 d-flex align-items-center gap-3">
-                                <i class="bi bi-shield-check fs-5"></i> Managed Domains
-                            </a>
-                            <a href="{$WEB_ROOT}/submitticket.php" class="list-group-item list-group-item-action bg-transparent text-white border-0 px-0 py-3 d-flex align-items-center gap-3">
-                                <i class="bi bi-headset fs-5"></i> Support
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <h6 class="text-uppercase small fw-bold text-neon opacity-75 mb-3">Account</h6>
-                        <div class="list-group list-group-flush bg-transparent">
-                            {if $loggedin}
-                                <a href="{$WEB_ROOT}/clientarea.php" class="list-group-item list-group-item-action bg-transparent text-white border-0 px-0 py-3 d-flex align-items-center gap-3">
-                                    <i class="bi bi-speedometer2 fs-5"></i> Dashboard
-                                </a>
-                                <a href="{$WEB_ROOT}/logout.php" class="list-group-item list-group-item-action bg-transparent text-white border-0 px-0 py-3 d-flex align-items-center gap-3 text-danger">
-                                    <i class="bi bi-box-arrow-right fs-5"></i> Logout
-                                </a>
-                            {else}
-                                <a href="{$WEB_ROOT}/login.php" class="list-group-item list-group-item-action bg-transparent text-white border-0 px-0 py-3 d-flex align-items-center gap-3">
-                                    <i class="bi bi-box-arrow-in-right fs-5"></i> Login
-                                </a>
-                                <a href="{$WEB_ROOT}/register.php" class="list-group-item list-group-item-action bg-transparent text-white border-0 px-0 py-3 d-flex align-items-center gap-3">
-                                    <i class="bi bi-person-plus fs-5"></i> Register
-                                </a>
-                            {/if}
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-auto p-4 border-top border-white border-opacity-10">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="small opacity-50">Theme Mode</span>
-                        <button class="btn btn-outline-light btn-sm rounded-pill px-3" id="mobileDarkModeToggle">
-                            <i class="bi bi-moon-stars"></i>
-                        </button>
-                    </div>
-                </div>
+                <ul class="navbar-nav justify-content-end flex-grow-1">
+                    <!-- Domain -->
+                    <li class="nav-item dropdown px-3 py-2 border-bottom">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Domain
+                        </a>
+                        <ul class="dropdown-menu border-0 shadow-none bg-light rounded-3 mt-2">
+                            <li><a class="dropdown-item py-2" href="{$WEB_ROOT}/cart.php?a=add&domain=register"><i class="bi bi-globe2 me-2"></i> Register Domains</a></li>
+                            <li><a class="dropdown-item py-2" href="{$WEB_ROOT}/cart.php?a=add&domain=transfer"><i class="bi bi-arrow-left-right me-2"></i> Transfer Domains</a></li>
+                            <li><a class="dropdown-item py-2" href="{$WEB_ROOT}/domainchecker.php"><i class="bi bi-search me-2"></i> WHOIS Lookup</a></li>
+                        </ul>
+                    </li>
+                    <!-- Hosting -->
+                    <li class="nav-item dropdown px-3 py-2 border-bottom">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hosting
+                        </a>
+                        <ul class="dropdown-menu border-0 shadow-none bg-light rounded-3 mt-2">
+                            <li><a class="dropdown-item py-2" href="{$WEB_ROOT}/store/hosting"><i class="bi bi-hdd-network me-2"></i> Web Hosting</a></li>
+                            <li><a class="dropdown-item py-2" href="{$WEB_ROOT}/store/wordpress"><i class="bi bi-wordpress me-2"></i> WordPress Hosting</a></li>
+                            <li><a class="dropdown-item py-2" href="{$WEB_ROOT}/store/cloud"><i class="bi bi-cloud me-2"></i> Cloud Hosting</a></li>
+                        </ul>
+                    </li>
+                    <!-- Support -->
+                    <li class="nav-item px-3 py-2 border-bottom">
+                        <a class="nav-link fw-bold" href="{$WEB_ROOT}/contact.php">Support</a>
+                    </li>
+                    <!-- Client Area (Mobile) -->
+                    {if $loggedin}
+                        <li class="nav-item px-3 py-2 border-bottom bg-light">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <i class="bi bi-person-circle fs-4"></i>
+                                <span class="fw-bold">{$clientsdetails.firstname}</span>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col-6"><a href="clientarea.php" class="btn btn-sm btn-outline-dark w-100">Dashboard</a></div>
+                                <div class="col-6"><a href="logout.php" class="btn btn-sm btn-danger w-100">Logout</a></div>
+                            </div>
+                        </li>
+                    {else}
+                        <li class="nav-item px-3 py-4">
+                            <a href="login.php" class="btn btn-neon w-100 rounded-pill py-3 fw-bold">Login / Register</a>
+                        </li>
+                    {/if}
+                </ul>
             </div>
         </div>
 
-        <!-- Desktop Nav Links -->
+        <!-- Desktop Nav Links (Hidden on mobile) -->
         <div class="collapse navbar-collapse d-none d-lg-block" id="mainNavbar">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                 <!-- Domain -->
@@ -194,14 +677,6 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mega-menu-col-title">Security & Services</div>
-                                            <a href="{$WEB_ROOT}/domainservices.php" class="mega-menu-item">
-                                                <div class="icon-wrapper"><i class="bi bi-shield-check"></i></div>
-                                                <div class="content">
-                                                    <span class="title">Managed Domain Services</span>
-                                                    <p class="desc">Expert management for your portfolio</p>
-                                                </div>
-                                                <i class="bi bi-arrow-right arrow"></i>
-                                            </a>
                                             <a href="{$WEB_ROOT}/store/ssl" class="mega-menu-item">
                                                 <div class="icon-wrapper"><i class="bi bi-shield-lock"></i></div>
                                                 <div class="content">
@@ -226,84 +701,6 @@
                                         <h3>Domain Sale!</h3>
                                         <p>Get .com domains for just $9.99 for the first year.</p>
                                         <a href="{$WEB_ROOT}/cart.php?a=add&domain=register" class="banner-link">Search Now <i class="bi bi-arrow-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- AI Tools -->
-                <li class="nav-item dropdown position-static">
-                    <a class="nav-link dropdown-toggle" href="#" id="aiToolsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        AI Tools
-                    </a>
-                    <div class="dropdown-menu w-100 shadow-lg border-0 rounded-4 mt-0 p-4 mega-menu" aria-labelledby="aiToolsDropdown">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-9">
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4 mb-md-0">
-                                            <div class="mega-menu-col-title">Brand Building</div>
-                                            <a href="{$WEB_ROOT}/aitools.php" class="mega-menu-item">
-                                                <div class="icon-wrapper"><i class="bi bi-grid-fill"></i></div>
-                                                <div class="content">
-                                                    <span class="title">AI Tools Dashboard</span>
-                                                    <p class="desc">Access all AI-powered tools</p>
-                                                </div>
-                                                <i class="bi bi-arrow-right arrow"></i>
-                                            </a>
-                                            <a href="{$WEB_ROOT}/businessnamegenerator.php" class="mega-menu-item">
-                                                <div class="icon-wrapper"><i class="bi bi-lightbulb"></i></div>
-                                                <div class="content">
-                                                    <span class="title">Business Name Generator</span>
-                                                    <p class="desc">Find the perfect name</p>
-                                                </div>
-                                                <i class="bi bi-arrow-right arrow"></i>
-                                            </a>
-                                            <a href="{$WEB_ROOT}/ailogogenerator.php" class="mega-menu-item">
-                                                <div class="icon-wrapper"><i class="bi bi-brush"></i></div>
-                                                <div class="content">
-                                                    <span class="title">AI Logo Generator</span>
-                                                    <p class="desc">Create professional logos</p>
-                                                </div>
-                                                <i class="bi bi-arrow-right arrow"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="mega-menu-col-title">Digital Presence</div>
-                                            <a href="{$WEB_ROOT}/aisitebuilder.php" class="mega-menu-item">
-                                                <div class="icon-wrapper"><i class="bi bi-window-sidebar"></i></div>
-                                                <div class="content">
-                                                    <span class="title">AI Site Builder</span>
-                                                    <p class="desc">Build websites in seconds</p>
-                                                </div>
-                                                <i class="bi bi-arrow-right arrow"></i>
-                                            </a>
-                                            <a href="{$WEB_ROOT}/brandinggenerator.php" class="mega-menu-item">
-                                                <div class="icon-wrapper"><i class="bi bi-palette"></i></div>
-                                                <div class="content">
-                                                    <span class="title">Branding Generator</span>
-                                                    <p class="desc">Complete brand kit generation</p>
-                                                </div>
-                                                <i class="bi bi-arrow-right arrow"></i>
-                                            </a>
-                                            <a href="{$WEB_ROOT}/aiimagegenerator.php" class="mega-menu-item">
-                                                <div class="icon-wrapper"><i class="bi bi-image"></i></div>
-                                                <div class="content">
-                                                    <span class="title">AI Image Generator</span>
-                                                    <p class="desc">Generate stunning visuals</p>
-                                                </div>
-                                                <i class="bi bi-arrow-right arrow"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="mega-menu-banner bg-neon text-dark">
-                                        <h3 class="text-dark">AI Powered!</h3>
-                                        <p class="text-dark">Leverage the latest AI models to grow your business faster.</p>
-                                        <a href="{$WEB_ROOT}/aitools.php" class="banner-link text-dark border-dark">Explore All <i class="bi bi-arrow-right"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -692,10 +1089,11 @@
 
             <!-- Right Icons (Cart & Login) -->
             <div class="nav-icons d-flex align-items-center mt-3 mt-lg-0">
-                <a href="{$WEB_ROOT}/customizer.php" title="Theme Customizer" class="me-3">
-                    <i class="bi bi-palette"></i>
+                <a href="#" id="darkModeToggle" title="Toggle Dark Mode" class="me-3 d-flex align-items-center gap-2 text-decoration-none">
+                    <i class="bi bi-moon-stars"></i>
+                    <span class="d-lg-none small fw-bold">Toggle Dark Mode</span>
                 </a>
-                <a href="{$WEB_ROOT}/cart.php?a=view" title="{$LANG.viewcart}">
+                <a href="{$WEB_ROOT}/cart.php?a=view" title="{$LANG.viewcart}" class="position-relative">
                     <i class="bi bi-cart3"></i>
                     {if isset($cartitemcount) && $cartitemcount > 0}
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5rem;">
@@ -703,33 +1101,96 @@
                         </span>
                     {/if}
                 </a>
+                {if $loggedin}
+                <div class="dropdown ms-4">
+                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="color: inherit; text-decoration: none;">
+                        <i class="bi bi-person-circle" style="font-size: 1.3rem;"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2">
+                        <li><div class="dropdown-header fw-bold text-dark">Welcome, {$clientsdetails.firstname}</div></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item py-2" href="clientarea.php"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></li>
+                        <li><a class="dropdown-item py-2" href="clientarea.php?action=products"><i class="bi bi-hdd-network me-2"></i> Services</a></li>
+                        <li><a class="dropdown-item py-2" href="clientarea.php?action=domains"><i class="bi bi-globe me-2"></i> Domains</a></li>
+                        <li><a class="dropdown-item py-2" href="supporttickets.php"><i class="bi bi-ticket-detailed me-2"></i> Tickets</a></li>
+                        <li><a class="dropdown-item py-2" href="clientarea.php?action=invoices"><i class="bi bi-receipt me-2"></i> Billing</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item py-2 text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+                    </ul>
+                </div>
+                {else}
                 <a href="{$WEB_ROOT}/clientarea.php" title="{$LANG.clientareatitle}" class="ms-4">
                     <i class="bi bi-person-circle"></i>
                 </a>
-                <button id="themeSwitcher" class="btn btn-link text-dark ms-3 p-0 shadow-none border-0" title="Toggle Theme">
-                    <i class="bi bi-moon-stars fs-5"></i>
-                </button>
+                {/if}
             </div>
         </div>
     </div>
 </nav>
 
 <!-- Domain Search Bar Section -->
+{if $templatefile == 'homepage' || $templatefile == 'domainchecker' || $templatefile == 'domainregister' || $templatefile == 'domaintransfer'}
 <div class="domain-search-section py-3" style="background-color: #eef8f0; border-bottom: 1px solid rgba(0,0,0,0.05);">
     <div class="container">
         <div class="d-flex flex-column flex-lg-row align-items-center gap-3">
             <!-- Search Input -->
             <form method="post" action="{$WEB_ROOT}/cart.php?a=add&domain=register" class="d-flex flex-grow-1 w-100 position-relative" style="max-width: 600px;">
+                <input type="hidden" name="token" value="{$token}" />
                 <input type="text" name="query" id="domainSearchInput" class="form-control form-control-lg border-0 shadow-sm" placeholder="Search for your domain here" style="border-radius: 8px 0 0 8px;" autocomplete="off">
                 <button type="submit" class="btn btn-lg px-4 fw-bold shadow-sm" style="background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); color: #000; border-radius: 0 8px 8px 0; border: none;">Search</button>
                 
                 <!-- TLD Suggestions Dropdown -->
-                <div id="tldSuggestions" class="position-absolute w-100 bg-white shadow rounded mt-1 d-none" style="top: 100%; z-index: 1000; max-height: 250px; overflow-y: auto; border: 1px solid #eee;">
-                    <ul class="list-group list-group-flush" id="tldSuggestionsList">
+                <div id="headerTldSuggestions" class="position-absolute w-100 bg-white shadow rounded mt-1 d-none" style="top: 100%; z-index: 1000; max-height: 250px; overflow-y: auto; border: 1px solid #eee;">
+                    <ul class="list-group list-group-flush" id="headerTldSuggestionsList">
                         <!-- Suggestions will be populated here by JS -->
                     </ul>
                 </div>
             </form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('domainSearchInput');
+    const suggestions = document.getElementById('headerTldSuggestions');
+    const list = document.getElementById('headerTldSuggestionsList');
+    const tlds = ['.com', '.net', '.org', '.io', '.co', '.info', '.me', '.biz'];
+    
+    if (input && suggestions && list) {
+        input.addEventListener('input', function() {
+            const val = this.value.trim();
+            if (val.length > 2) {
+                suggestions.classList.remove('d-none');
+                let html = '';
+                const domainName = val.split('.')[0];
+                tlds.forEach((tld, index) => {
+                    const isPremium = index % 3 === 0; // Mock premium status
+                    html += `<li class="list-group-item list-group-item-action py-2 px-3 cursor-pointer header-suggestion-item d-flex justify-content-between align-items-center" data-domain="${domainName}${tld}">
+                                <div>
+                                    <i class="bi bi-search me-2 text-muted"></i> ${domainName}<span class="text-success fw-bold">${tld}</span>
+                                </div>
+                                ${isPremium ? '<span class="badge bg-warning text-dark small" style="font-size: 0.6rem;">Premium</span>' : ''}
+                             </li>`;
+                });
+                list.innerHTML = html;
+                
+                document.querySelectorAll('.header-suggestion-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        input.value = this.getAttribute('data-domain');
+                        suggestions.classList.add('d-none');
+                    });
+                });
+            } else {
+                suggestions.classList.add('d-none');
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!input.contains(e.target) && !suggestions.contains(e.target)) {
+                suggestions.classList.add('d-none');
+            }
+        });
+    }
+});
+</script>
 
             <!-- Promo Cards -->
             <div class="d-flex flex-wrap gap-2 justify-content-center flex-grow-1 align-items-center">
@@ -762,6 +1223,7 @@
         </div>
     </div>
 </div>
+{/if}
 
 <!-- Cookie Banner -->
 <div id="cookieBanner" class="cookie-banner d-flex justify-content-between align-items-center flex-wrap gap-3">
@@ -775,9 +1237,98 @@
     </div>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if(darkModeToggle) {
+        const icon = darkModeToggle.querySelector('i');
+        const isDark = localStorage.getItem('darkMode') === 'true';
+        if (isDark) {
+            document.body.classList.add('dark-mode');
+            icon.classList.replace('bi-moon-stars', 'bi-sun');
+        }
+        darkModeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.body.classList.toggle('dark-mode');
+            const isNowDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isNowDark);
+            if (isNowDark) {
+                icon.classList.replace('bi-moon-stars', 'bi-sun');
+            } else {
+                icon.classList.replace('bi-sun', 'bi-moon-stars');
+            }
+        });
+    }
+
+    // Cookie Banner
+    const cookieBanner = document.getElementById('cookieBanner');
+    if (cookieBanner && !localStorage.getItem('cookieConsent')) {
+        setTimeout(() => cookieBanner.classList.add('show'), 1000);
+    }
+    const acceptBtn = document.getElementById('acceptCookies');
+    if(acceptBtn) {
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.classList.remove('show');
+        });
+    }
+    const declineBtn = document.getElementById('declineCookies');
+    if(declineBtn) {
+        declineBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieBanner.classList.remove('show');
+        });
+    }
+});
+</script>
+
 {if $templatefile != 'homepage'}
 <section id="main-body" class="py-5">
     <div class="container">
         <div class="row">
-            <!-- Main Content Starts Here -->
+            {if $loggedin && $templatefile != 'login' && $templatefile != 'register' && $templatefile != 'passwordreset'}
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sidebar-sticky">
+                    <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush">
+                                <a href="clientarea.php" class="list-group-item list-group-item-action border-0 py-3 px-4 {if $templatefile == 'clientareahome'}active bg-success text-white{/if}">
+                                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                                </a>
+                                <a href="clientarea.php?action=products" class="list-group-item list-group-item-action border-0 py-3 px-4 {if $templatefile == 'clientareaproducts'}active bg-success text-white{/if}">
+                                    <i class="bi bi-hdd-network me-2"></i> Services
+                                </a>
+                                <a href="clientarea.php?action=domains" class="list-group-item list-group-item-action border-0 py-3 px-4 {if $templatefile == 'clientareadomains'}active bg-success text-white{/if}">
+                                    <i class="bi bi-globe me-2"></i> Domains
+                                </a>
+                                <a href="supporttickets.php" class="list-group-item list-group-item-action border-0 py-3 px-4 {if $templatefile == 'supportticketslist'}active bg-success text-white{/if}">
+                                    <i class="bi bi-ticket-detailed me-2"></i> Tickets
+                                </a>
+                                <a href="clientarea.php?action=invoices" class="list-group-item list-group-item-action border-0 py-3 px-4 {if $templatefile == 'clientareainvoices'}active bg-success text-white{/if}">
+                                    <i class="bi bi-receipt me-2"></i> Billing
+                                </a>
+                                <a href="clientarea.php?action=details" class="list-group-item list-group-item-action border-0 py-3 px-4 {if $templatefile == 'clientarea'}active bg-success text-white{/if}">
+                                    <i class="bi bi-person me-2"></i> My Details
+                                </a>
+                                <a href="logout.php" class="list-group-item list-group-item-action border-0 py-3 px-4 text-danger">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card border-0 shadow-sm rounded-4 mb-4 bg-success text-white">
+                        <div class="card-body p-4">
+                            <h6 class="fw-bold mb-2">Need Help?</h6>
+                            <p class="small mb-3 opacity-75">Our support team is available 24/7 to assist you.</p>
+                            <a href="submitticket.php" class="btn btn-light btn-sm w-100 rounded-pill fw-bold">Contact Support</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+            {else}
+            <div class="col-12">
+            {/if}
 {/if}

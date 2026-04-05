@@ -1,0 +1,37 @@
+{
+  "entities": {
+    "UserCredits": {
+      "title": "UserCredits",
+      "description": "Stores the credits for each user.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique ID of the user." },
+        "credits": { "type": "integer", "description": "The number of credits the user has." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "The last time the credits were updated." }
+      },
+      "required": ["uid", "credits"]
+    },
+    "ToolUsage": {
+      "title": "ToolUsage",
+      "description": "Logs the usage of AI tools.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique ID of the user." },
+        "toolId": { "type": "string", "description": "The ID of the tool used." },
+        "cost": { "type": "integer", "description": "The credit cost of the usage." },
+        "timestamp": { "type": "string", "format": "date-time", "description": "When the tool was used." }
+      },
+      "required": ["uid", "toolId", "cost", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users_credits/{uid}": {
+      "schema": "UserCredits",
+      "description": "Collection for user credits."
+    },
+    "/tool_usage/{usageId}": {
+      "schema": "ToolUsage",
+      "description": "Collection for logging tool usage."
+    }
+  }
+}

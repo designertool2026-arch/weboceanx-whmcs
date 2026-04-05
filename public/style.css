@@ -395,6 +395,125 @@ body.dark-mode .accordion-button::after {
     color: #6c757d;
 }
 
+.active-suggestion {
+    background-color: rgba(0, 255, 102, 0.1) !important;
+    border-left: 4px solid var(--wo-neon-green) !important;
+}
+
+#tldSuggestions, #checkerTldSuggestions {
+    border-radius: 12px !important;
+    overflow: hidden;
+    border: none !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#tldSuggestionsList li, #checkerTldSuggestionsList li {
+    transition: background-color 0.2s;
+}
+
+#tldSuggestionsList li:hover, #checkerTldSuggestionsList li:hover {
+    background-color: #f8f9fa;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .glass-card {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-link {
+    transition: all 0.3s ease;
+    border: 1px solid transparent !important;
+}
+
+.sidebar-link:hover {
+    background-color: var(--wo-neon-green) !important;
+    color: var(--wo-dark-green) !important;
+    transform: translateX(5px);
+}
+
+/* Custom Radio Cards */
+.custom-radio-card input:checked + label {
+    border-color: var(--wo-neon-green) !important;
+    background-color: rgba(0, 255, 102, 0.05);
+    color: var(--wo-neon-green);
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+}
+
+.custom-radio-card label:hover {
+    border-color: var(--wo-neon-green);
+    background-color: rgba(0, 255, 102, 0.02);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.min-vh-50 {
+    min-height: 50vh;
+}
+
+.shadow-inner {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.sidebar-link:hover i {
+    color: var(--wo-dark-green) !important;
+}
+
+.dark-mode .sidebar-link {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.dark-mode .sidebar-link:hover {
+    background-color: var(--wo-neon-green) !important;
+    color: var(--wo-dark-green) !important;
+}
+
+/* Hero Animations */
+.hero-animate-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.hero-animate-delay-1 { animation-delay: 0.2s; }
+.hero-animate-delay-2 { animation-delay: 0.4s; }
+.hero-animate-delay-3 { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: perspective(1000px) rotateY(-10deg) translateY(0px); }
+    50% { transform: perspective(1000px) rotateY(-10deg) translateY(-20px); }
+    100% { transform: perspective(1000px) rotateY(-10deg) translateY(0px); }
+}
+
 /* 
  * WebOceanX WHMCS Theme Styles
  * Modern, High-Tech, Responsive

@@ -37,6 +37,13 @@ export default function Home() {
     'products.tpl': '',
     'cartloading.tpl': '',
     'orderconfirmation.tpl': '',
+    'domainservices.tpl': '',
+    'aitools.tpl': '',
+    'ailogogenerator.tpl': '',
+    'businessnamegenerator.tpl': '',
+    'brandinggenerator.tpl': '',
+    'aisitebuilder.tpl': '',
+    'aiimagegenerator.tpl': '',
     'style.css': '',
     'script.js': ''
   });
@@ -51,7 +58,10 @@ export default function Home() {
       'clientarea.tpl', 'announcements.tpl', 'knowledgebase.tpl', 'downloads.tpl', 'error.tpl',
       'viewcart.tpl', 'checkout.tpl', 'configureproduct.tpl', 'login.tpl', 
       'register.tpl', 'passwordreset.tpl', 'products.tpl', 'cartloading.tpl', 
-      'orderconfirmation.tpl', 'style.css', 'script.js'
+      'orderconfirmation.tpl', 'domainservices.tpl', 
+      'aitools.tpl', 'ailogogenerator.tpl', 'businessnamegenerator.tpl', 
+      'brandinggenerator.tpl', 'aisitebuilder.tpl', 'aiimagegenerator.tpl',
+      'style.css', 'script.js'
     ];
 
     Promise.all(

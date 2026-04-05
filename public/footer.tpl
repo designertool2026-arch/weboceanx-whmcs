@@ -30,8 +30,8 @@
                 <ul class="list-unstyled opacity-75">
                     <li class="mb-2"><a href="{$WEB_ROOT}/store/hosting" class="text-white text-decoration-none">Shared Hosting</a></li>
                     <li class="mb-2"><a href="{$WEB_ROOT}/store/vps" class="text-white text-decoration-none">VPS Hosting</a></li>
+                    <li class="mb-2"><a href="{$WEB_ROOT}/domainservices.php" class="text-white text-decoration-none">Managed Domains</a></li>
                     <li class="mb-2"><a href="{$WEB_ROOT}/store/dedicated" class="text-white text-decoration-none">Dedicated Servers</a></li>
-                    <li class="mb-2"><a href="{$WEB_ROOT}/store/wordpress" class="text-white text-decoration-none">WordPress Hosting</a></li>
                 </ul>
             </div>
             <div class="col-6 col-lg-2">

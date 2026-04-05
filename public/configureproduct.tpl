@@ -395,7 +395,7 @@
             <a href="#" class="text-muted text-decoration-none" style="font-size: 0.9rem;"><i class="bi bi-share"></i> Share</a>
         </div>
 
-        <form method="post" action="cart.php?a=add&pid={$productinfo.pid}">
+        <form method="post" action="cart.php?a=add&pid={$productinfo.pid}&viewcart=1">
             
             <!-- Billing Term -->
             <div class="wo-config-group">

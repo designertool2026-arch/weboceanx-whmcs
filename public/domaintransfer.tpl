@@ -24,6 +24,45 @@
                     </div>
                     
                     <div class="col-md-12 mt-5">
+                        <h4 class="fw-bold mb-4">Transfer <span class="text-success">Status</span></h4>
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-light">
+                                    <div class="d-flex align-items-center gap-3 mb-3">
+                                        <div class="bg-warning-subtle text-warning rounded-circle p-2">
+                                            <i class="bi bi-clock-history fs-4"></i>
+                                        </div>
+                                        <h6 class="fw-bold m-0">Transfer Pending</h6>
+                                    </div>
+                                    <p class="small text-muted mb-0">Your transfer is currently being processed. This can take 5-7 days depending on the TLD.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-light">
+                                    <div class="d-flex align-items-center gap-3 mb-3">
+                                        <div class="bg-success-subtle text-success rounded-circle p-2">
+                                            <i class="bi bi-check-circle fs-4"></i>
+                                        </div>
+                                        <h6 class="fw-bold m-0">Transfer Complete</h6>
+                                    </div>
+                                    <p class="small text-muted mb-0">Congratulations! Your domain has been successfully moved to WebOceanX.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-light">
+                                    <div class="d-flex align-items-center gap-3 mb-3">
+                                        <div class="bg-danger-subtle text-danger rounded-circle p-2">
+                                            <i class="bi bi-x-circle fs-4"></i>
+                                        </div>
+                                        <h6 class="fw-bold m-0">Transfer Failed</h6>
+                                    </div>
+                                    <p class="small text-muted mb-0">The transfer request was rejected. Please check your EPP code and domain unlock status.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-5">
                         <h4 class="fw-bold mb-4">Transfer <span class="text-success">Process</span></h4>
                         <div class="row g-4">
                             <div class="col-md-4">

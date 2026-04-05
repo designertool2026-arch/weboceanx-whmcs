@@ -1,30 +1,278 @@
 {* homepage.tpl for WHMCS theme "weboceanx" - Redesigned & Enhanced *}
 
+<style>
+    :root {
+        --wo-dark-green: #0a251c;
+        --wo-primary-green: #114232;
+        --wo-neon-green: #00ff66;
+        --wo-neon-hover: #00cc52;
+        --wo-light-green: #e6f7f1;
+        --wo-text-dark: #1a1a1a;
+        --wo-gray-bg: #f8f9fa;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--wo-gray-bg);
+    }
+
+    .text-neon { color: var(--wo-neon-green); }
+    .bg-dark-green { background-color: var(--wo-dark-green); color: white; }
+    .bg-primary-green { background-color: var(--wo-primary-green); color: white; }
+    .bg-light-green { background-color: var(--wo-light-green); color: var(--wo-text-dark); }
+    
+    .btn-neon { 
+        background-color: var(--wo-neon-green); 
+        color: #000; 
+        font-weight: 600; 
+        border: none; 
+        transition: all 0.3s ease;
+    }
+    .btn-neon:hover { 
+        background-color: var(--wo-neon-hover); 
+        color: #000; 
+    }
+
+    /* Sticky Header */
+    .sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+        background-color: rgba(10, 37, 28, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .sticky-header a {
+        color: white;
+        text-decoration: none;
+        margin-left: 1.5rem;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+    .sticky-header a:hover {
+        color: var(--wo-neon-green);
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, var(--wo-dark-green) 0%, var(--wo-primary-green) 100%);
+        padding: 4rem 0 8rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-section .container {
+        position: relative;
+        z-index: 2;
+    }
+    
+    /* Hero Animations */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounceIn {
+        0% { opacity: 0; transform: scale(0.3); }
+        50% { opacity: 1; transform: scale(1.05); }
+        70% { transform: scale(0.9); }
+        100% { transform: scale(1); }
+    }
+    @keyframes float {
+        0% { transform: perspective(1000px) rotateY(-10deg) translateY(0px); }
+        50% { transform: perspective(1000px) rotateY(-10deg) translateY(-20px); }
+        100% { transform: perspective(1000px) rotateY(-10deg) translateY(0px); }
+    }
+    
+    .hero-title { animation: fadeInUp 0.8s ease-out forwards; }
+    .hero-subtitle { animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+    .hero-cta { animation: bounceIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s forwards; opacity: 0; }
+    .hero-image { animation: float 6s ease-in-out infinite; }
+    
+    .hero-waves {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        min-height: 100px;
+        max-height: 150px;
+        z-index: 1;
+    }
+    .parallax > use {
+        animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+    }
+    .parallax > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; }
+    .parallax > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; }
+    .parallax > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; }
+    .parallax > use:nth-child(4) { animation-delay: -5s; animation-duration: 20s; }
+    @keyframes move-forever {
+        0% { transform: translate3d(-90px,0,0); }
+        100% { transform: translate3d(85px,0,0); }
+    }
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+
+    .domain-search-wrapper {
+        background: white;
+        border-radius: 50px;
+        padding: 0.5rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        margin-bottom: 4rem;
+    }
+
+    .domain-search-wrapper input {
+        border: none;
+        box-shadow: none !important;
+        padding-left: 1.5rem;
+    }
+
+    .domain-search-wrapper .btn {
+        border-radius: 50px;
+        padding: 0.75rem 2rem;
+    }
+
+    /* Social Share Buttons */
+    .social-share a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        color: white;
+        margin-right: 0.5rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    .social-share a:hover {
+        background: var(--wo-neon-green);
+        color: var(--wo-dark-green);
+        transform: translateY(-3px);
+    }
+
+    .hosting-cards-row {
+        margin-top: -5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .hosting-card {
+        border-radius: 12px;
+        padding: 2rem;
+        height: 100%;
+        transition: transform 0.3s ease;
+        border: none;
+    }
+    
+    .hosting-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature-icon-box {
+        width: 48px;
+        height: 48px;
+        background-color: var(--wo-light-green);
+        color: var(--wo-primary-green);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        cursor: help;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-icon-box:hover {
+        transform: scale(1.1) rotate(5deg);
+        background-color: var(--wo-neon-green);
+        color: var(--wo-dark-green);
+    }
+
+    .stats-section {
+        background: linear-gradient(135deg, var(--wo-primary-green) 0%, var(--wo-dark-green) 100%);
+        color: white;
+        border-radius: 24px;
+        margin: 4rem 0;
+    }
+
+    .testimonial-card {
+        background-color: var(--wo-primary-green);
+        color: white;
+        border-radius: 12px;
+        padding: 2rem;
+        height: 100%;
+    }
+
+    .support-section {
+        background-color: var(--wo-gray-bg);
+        border-radius: 24px;
+        overflow: hidden;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 991.98px) {
+        .hosting-cards-row {
+            margin-top: 2rem;
+        }
+        .hero-section {
+            padding: 3rem 0 4rem 0;
+        }
+        .stats-section {
+            padding: 2rem !important;
+        }
+        .domain-search-wrapper {
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        .domain-search-wrapper form {
+            flex-direction: column;
+        }
+        .domain-search-wrapper input {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            text-align: center;
+        }
+        .domain-search-wrapper .btn {
+            width: 100%;
+            border-radius: 8px;
+        }
+    }
+</style>
+
 <!-- Hero Section -->
-<div class="hero-section text-white py-5 py-lg-0">
+<div class="hero-section text-white">
     <div class="container">
         <!-- Hero Content -->
-        <div class="row align-items-center mt-lg-4">
-            <div class="col-lg-6 text-center text-lg-start">
-                <div class="mb-3 hero-animate-up">
+        <div class="row align-items-center mt-4">
+            <div class="col-lg-6">
+                <div class="mb-3">
                     <span class="badge bg-light text-dark me-2">WEB OCEANX HOSTING</span>
                     <span class="text-warning">★★★★★</span> <small class="ms-1">4.7/5 Based on reviews</small>
                 </div>
-                <h1 class="display-4 fw-bold mb-4 hero-animate-up hero-animate-delay-1">Launch your website.<br>We'll run it safely.</h1>
-                <p class="lead mb-4 opacity-75 hero-animate-up hero-animate-delay-2">From idea to production in minutes, deploy secure, globally distributed sites with the infrastructure, protection, and reliability your users depend on.</p>
-                <a href="cart.php" class="btn btn-neon btn-lg px-4 py-3 rounded-pill mb-4 hero-animate-up hero-animate-delay-3">Start building</a>
+                <h1 class="display-4 fw-bold mb-4 hero-title">Launch your website.<br>We'll run it safely.</h1>
+                <p class="lead mb-4 opacity-75 hero-subtitle">From idea to production in minutes, deploy secure, globally distributed sites with the infrastructure, protection, and reliability your users depend on.</p>
+                <a href="cart.php" class="btn btn-neon btn-lg px-4 py-3 rounded-pill mb-4 hero-cta">Start building</a>
                 
                 <!-- Social Share -->
-                <div class="social-share mt-2 justify-content-center justify-content-lg-start hero-animate-up hero-animate-delay-3">
+                <div class="social-share mt-2 hero-subtitle">
                     <span class="me-3 small opacity-75 fw-bold">Share:</span>
                     <a href="https://facebook.com/sharer/sharer.php?u=#" target="_blank" title="Share on Facebook"><i class="bi bi-facebook"></i></a>
                     <a href="https://twitter.com/intent/tweet?url=#&text=Check%20out%20Web%20Oceanx" target="_blank" title="Share on Twitter"><i class="bi bi-twitter-x"></i></a>
                     <a href="https://www.linkedin.com/shareArticle?mini=true&url=#" target="_blank" title="Share on LinkedIn"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
-            <div class="col-lg-6 d-none d-lg-block text-center hero-animate-up hero-animate-delay-2">
+            <div class="col-lg-6 d-none d-lg-block text-center">
                 <!-- Placeholder for Hero Graphic -->
-                <img src="https://picsum.photos/seed/dashboard/600/400" alt="Dashboard Preview" class="img-fluid rounded-3 shadow-lg hero-float" style="transform: perspective(1000px) rotateY(-10deg); border: 5px solid rgba(255,255,255,0.1);">
+                <img src="https://picsum.photos/seed/dashboard/600/400" alt="Dashboard Preview" class="img-fluid rounded-3 shadow-lg hero-image" style="transform: perspective(1000px) rotateY(-10deg); border: 5px solid rgba(255,255,255,0.1);">
             </div>
         </div>
     </div>
@@ -108,41 +356,41 @@
 </section>
 
 <!-- Hosting Types Cards (Overlapping Hero) -->
-<div id="hosting" class="container hosting-cards-row mb-5 mt-n5 mt-lg-0">
+<div id="hosting" class="container hosting-cards-row mb-5">
     <div class="row g-4">
         <div class="col-md-6 col-lg-3">
-            <div class="hosting-card bg-dark-green shadow-lg h-100">
+            <div class="hosting-card bg-dark-green shadow-lg">
                 <h5 class="fw-bold mb-4">Fast Shared Hosting</h5>
                 <p class="small opacity-75 mb-1">Starting at</p>
                 <h2 class="display-6 fw-bold mb-4">$3.99</h2>
-                <a href="cart.php?gid=1" class="text-neon text-decoration-none fw-bold mt-auto d-block">Find out more <i class="bi bi-arrow-right"></i></a>
+                <a href="cart.php?gid=1" class="text-neon text-decoration-none fw-bold">Find out more <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
         <div class="col-md-6 col-lg-3">
-            <div class="hosting-card bg-primary-green shadow-lg position-relative h-100">
+            <div class="hosting-card bg-primary-green shadow-lg position-relative">
                 <div class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning text-dark px-3 py-2 fw-bold shadow-sm" style="font-size: 0.75rem; z-index: 2;">
                     <i class="bi bi-star-fill me-1"></i> Most Popular
                 </div>
                 <h5 class="fw-bold mb-4 mt-2">Managed cPanel VPS</h5>
                 <p class="small opacity-75 mb-1">Starting at</p>
                 <h2 class="display-6 fw-bold mb-4">$28.75</h2>
-                <a href="cart.php?gid=2" class="text-neon text-decoration-none fw-bold mt-auto d-block">Find out more <i class="bi bi-arrow-right"></i></a>
+                <a href="cart.php?gid=2" class="text-neon text-decoration-none fw-bold">Find out more <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
         <div class="col-md-6 col-lg-3">
-            <div class="hosting-card bg-light-green shadow-lg h-100">
+            <div class="hosting-card bg-light-green shadow-lg">
                 <h5 class="fw-bold mb-4">Reseller Accounts</h5>
                 <p class="small text-muted mb-1">Starting at</p>
                 <h2 class="display-6 fw-bold mb-4">$20.42</h2>
-                <a href="cart.php?gid=3" class="text-success text-decoration-none fw-bold mt-auto d-block">Find out more <i class="bi bi-arrow-right"></i></a>
+                <a href="cart.php?gid=3" class="text-success text-decoration-none fw-bold">Find out more <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
         <div class="col-md-6 col-lg-3">
-            <div class="hosting-card bg-white shadow-lg h-100">
+            <div class="hosting-card bg-white shadow-lg">
                 <h5 class="fw-bold mb-4">Hosting for WordPress</h5>
                 <p class="small text-muted mb-1">Starting at</p>
                 <h2 class="display-6 fw-bold mb-4">$1.00</h2>
-                <a href="cart.php?gid=4" class="text-success text-decoration-none fw-bold mt-auto d-block">Find out more <i class="bi bi-arrow-right"></i></a>
+                <a href="cart.php?gid=4" class="text-success text-decoration-none fw-bold">Find out more <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
     </div>
@@ -423,6 +671,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="text-center mt-4">
+                    <a href="{$WEB_ROOT}/knowledgebase.php" class="btn btn-outline-success rounded-pill px-4 fw-bold">View full Knowledgebase <i class="bi bi-arrow-right ms-2"></i></a>
+                </div>
             </div>
         </div>
     </div>
@@ -441,3 +692,16 @@
         </div>
     </div>
 </div>
+
+<!-- Initialize Bootstrap Tooltips -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Check if bootstrap is available (WHMCS usually loads it)
+        if (typeof bootstrap !== 'undefined') {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
+    });
+</script>

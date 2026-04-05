@@ -1,0 +1,170 @@
+/* weboceanx-order/style.css */
+:root {
+    --wo-primary: #00ff66;
+    --wo-primary-hover: #00cc52;
+    --wo-bg-dark: #0f172a;
+    --wo-bg-darker: #0a0f1d;
+    --wo-bg-card: #1e293b;
+    --wo-text: #e2e8f0;
+    --wo-text-muted: #94a3b8;
+    --wo-border: #334155;
+    --wo-neon-green: #00ff66;
+}
+
+.weboceanx-order-body {
+    background-color: var(--wo-bg-dark);
+    color: var(--wo-text);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Product Cards */
+.product-card {
+    background-color: var(--wo-bg-card);
+    border: 1px solid var(--wo-border);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--wo-primary);
+    box-shadow: 0 10px 30px rgba(0, 255, 102, 0.1);
+}
+
+.product-card .card-header {
+    background: transparent;
+    border-bottom: 1px solid var(--wo-border);
+    padding: 2rem;
+    text-align: center;
+}
+
+.product-card .price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--wo-primary);
+    margin: 1rem 0;
+}
+
+.product-card .features {
+    padding: 2rem;
+    flex-grow: 1;
+}
+
+.product-card .features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-card .features li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--wo-text-muted);
+}
+
+.product-card .features li i {
+    color: var(--wo-primary);
+}
+
+.product-card .card-footer {
+    background: transparent;
+    border-top: 1px solid var(--wo-border);
+    padding: 2rem;
+}
+
+/* Cart Summary */
+.cart-summary {
+    background-color: var(--wo-bg-darker);
+    border: 1px solid var(--wo-border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: sticky;
+    top: 2rem;
+}
+
+/* Steps Indicator */
+.order-steps {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--wo-text-muted);
+    font-weight: 600;
+}
+
+.step-item.active {
+    color: var(--wo-primary);
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--wo-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.active .step-number {
+    background-color: var(--wo-primary);
+    color: #000;
+}
+
+/* Forms */
+.form-control, .form-select {
+    background-color: var(--wo-bg-darker);
+    border: 1px solid var(--wo-border);
+    color: var(--wo-text);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--wo-bg-darker);
+    border-color: var(--wo-primary);
+    color: var(--wo-text);
+    box-shadow: 0 0 0 0.25rem rgba(0, 255, 102, 0.1);
+}
+
+/* Buttons */
+.btn-order {
+    background-color: var(--wo-primary);
+    color: #000;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-order:hover {
+    background-color: var(--wo-primary-hover);
+    transform: translateY(-2px);
+}
+
+.btn-order-outline {
+    background-color: transparent;
+    color: var(--wo-primary);
+    border: 2px solid var(--wo-primary);
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+}
+
+.btn-order-outline:hover {
+    background-color: var(--wo-primary);
+    color: #000;
+}
