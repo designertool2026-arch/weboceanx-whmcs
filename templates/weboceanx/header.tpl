@@ -15,6 +15,7 @@
 
 {$headeroutput}
 
+{if $templatefile != 'clientareahome'}
 <nav class="navbar navbar-expand-lg wo-navbar sticky-top">
     <div class="container">
         <a class="navbar-brand" href="{$WEB_ROOT}/index.php">Web Oceanx</a>
@@ -37,3 +38,4 @@
         </div>
     </div>
 </nav>
+{/if}
