@@ -2,68 +2,68 @@
 
 <style>
     .wo-sidebar {
-        background-color: #0f172a;
+        background-color: #011714;
         border-radius: 16px;
         padding: 1.5rem;
-        border: 1px solid #334155;
+        border: 1px solid rgba(255,255,255,0.05);
     }
     .wo-nav-link {
         display: flex;
         align-items: center;
         gap: 0.75rem;
         padding: 0.75rem 1rem;
-        color: #94a3b8;
+        color: #8ea19e;
         text-decoration: none;
         border-radius: 8px;
         transition: all 0.2s;
         font-weight: 500;
     }
     .wo-nav-link:hover, .wo-nav-link.active {
-        background-color: rgba(74, 222, 128, 0.1);
-        color: #4ade80;
+        background-color: rgba(255, 255, 255, 0.06);
+        color: #ffffff;
     }
     .wo-nav-link i {
         font-size: 1.25rem;
     }
     .ai-credits-widget {
-        background: linear-gradient(135deg, #0f3d2e, #071a16);
+        background: #021b18;
         border-radius: 12px;
         padding: 1.5rem;
         text-align: center;
-        border: 1px solid #064e3b;
+        border: 1px solid rgba(180,245,60,0.2);
         margin-top: 1.5rem;
     }
     .btn-neon-primary {
-        background-color: #4ade80;
-        color: #064e3b;
+        background-color: #b4f53c;
+        color: #011d1a;
         border: none;
         font-weight: 600;
         transition: all 0.2s;
     }
     .btn-neon-primary:hover {
-        background-color: #22c55e;
-        color: #064e3b;
+        background-color: #6ee7a0;
+        color: #011d1a;
         transform: translateY(-1px);
     }
     .wo-content-card {
-        background-color: #1e293b;
+        background-color: #052a26;
         border-radius: 16px;
-        border: 1px solid #334155;
+        border: 1px solid rgba(255,255,255,0.05);
         padding: 2rem;
     }
     .table-dark-custom {
         color: #e2e8f0;
     }
     .table-dark-custom th {
-        border-bottom: 1px solid #334155;
-        color: #94a3b8;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        color: #8ea19e;
         font-weight: 600;
         text-transform: uppercase;
         font-size: 0.85rem;
         padding-bottom: 1rem;
     }
     .table-dark-custom td {
-        border-bottom: 1px solid #334155;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
         padding: 1rem 0;
         vertical-align: middle;
     }
@@ -99,7 +99,7 @@
 
             <!-- Collapsible AI Tools Section -->
             <div class="d-flex justify-content-between align-items-center px-3 mt-4 mb-3" data-bs-toggle="collapse" data-bs-target="#aiToolsCollapse" aria-expanded="true" aria-controls="aiToolsCollapse" style="cursor: pointer;">
-                <h6 class="text-uppercase fw-bold m-0" style="font-size: 0.75rem; letter-spacing: 1px; color: #4ade80;">AI Tools Dashboard</h6>
+                <h6 class="text-uppercase fw-bold m-0" style="font-size: 0.75rem; letter-spacing: 1px; color: #b4f53c;">AI Tools Dashboard</h6>
                 <i class="bi bi-chevron-down text-muted wo-collapse-icon" style="font-size: 0.8rem; transition: transform 0.3s;"></i>
             </div>
             
@@ -128,9 +128,9 @@
 
             <!-- AI Credits Widget -->
             <div class="ai-credits-widget">
-                <i class="bi bi-lightning-charge-fill fs-3 mb-2 d-block" style="color: #4ade80;"></i>
+                <i class="bi bi-lightning-charge-fill fs-3 mb-2 d-block" style="color: #b4f53c;"></i>
                 <h6 class="text-white fw-bold mb-1">AI Credits</h6>
-                <div class="display-6 fw-bold mb-3" style="color: #4ade80;">{$ai_credits|default:'0'}</div>
+                <div class="display-6 fw-bold mb-3" style="color: #b4f53c;">{$ai_credits|default:'0'}</div>
                 <a href="cart.php?a=add&pid=1" class="btn btn-neon-primary btn-sm w-100 rounded-pill">Buy Credits</a>
             </div>
         </div>

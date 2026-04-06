@@ -1,379 +1,582 @@
-{* WebOceanx - clientareahome.tpl (Redesigned Dashboard with AI Tools) *}
-
-<style>
-    /* Dashboard Specific Variables - Adapts to Light/Dark Mode */
-    :root {
-        --wo-dash-bg: #f8fafc;
-        --wo-dash-card: #ffffff;
-        --wo-dash-text: #0f172a;
-        --wo-dash-muted: #64748b;
-        --wo-dash-border: #e2e8f0;
-        --wo-dash-hover: #f1f5f9;
-        --wo-dash-tab-bg: #f1f5f9;
-        --wo-dash-tab-active: #ffffff;
-    }
-
-    body.dark-mode {
-        --wo-dash-bg: #0f172a;
-        --wo-dash-card: #1e293b;
-        --wo-dash-text: #f8fafc;
-        --wo-dash-muted: #94a3b8;
-        --wo-dash-border: #334155;
-        --wo-dash-hover: #334155;
-        --wo-dash-tab-bg: rgba(0,0,0,0.2);
-        --wo-dash-tab-active: #1e293b;
-    }
-
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --wo-dash-bg: #0f172a;
-            --wo-dash-card: #1e293b;
-            --wo-dash-text: #f8fafc;
-            --wo-dash-muted: #94a3b8;
-            --wo-dash-border: #334155;
-            --wo-dash-hover: #334155;
-            --wo-dash-tab-bg: rgba(0,0,0,0.2);
-            --wo-dash-tab-active: #1e293b;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>WebOceanX – Client Dashboard</title>
+    <!-- Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* ---------- RESET & GLOBAL ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    }
 
-    .wo-dashboard {
-        color: var(--wo-dash-text);
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
+        /* Force WHMCS to hide all its default wrappers */
+        #header, #footer, .header-lined, .breadcrumb-wrapper, .navbar,
+        footer, .topbar, .main-header, .page-header, .whmcs-header,
+        .whmcs-footer, .global-header, .global-footer {
+            display: none !important;
+        }
 
-    .wo-dash-card {
-        background-color: var(--wo-dash-card);
-        border: 1px solid var(--wo-dash-border);
-        border-radius: 16px;
-    }
+        body, html {
+            margin: 0 !important;
+            padding: 0 !important;
+            background: #011d1a !important;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
 
-    .wo-stat-box {
-        background-color: var(--wo-dash-card);
-        border: 1px solid var(--wo-dash-border);
-        border-radius: 12px;
-        padding: 16px 20px;
-        min-width: 150px;
-        flex: 1;
-    }
+        /* ---------- APP LAYOUT ---------- */
+        .app-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
 
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* ---------- SIDEBAR (hosting.com style) ---------- */
+        .app-sidebar {
+            width: 280px;
+            background: #011714;
+            position: fixed;
+            height: 100vh;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
 
-    .wo-todo-item {
-        border: 1px solid var(--wo-dash-border);
-        border-radius: 12px;
-        transition: background-color 0.2s;
-        color: var(--wo-dash-text);
-        text-decoration: none;
-    }
-    .wo-todo-item:hover {
-        background-color: var(--wo-dash-hover);
-        color: var(--wo-dash-text);
-    }
+        .sidebar-brand {
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+            background: linear-gradient(135deg, #b4f53c, #59e38c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
 
-    .wo-help-item {
-        border-bottom: 1px solid var(--wo-dash-border);
-        transition: background-color 0.2s, border-radius 0.2s;
-        color: var(--wo-dash-text);
-        text-decoration: none;
-    }
-    .wo-help-item:hover {
-        background-color: var(--wo-dash-hover);
-        border-radius: 8px;
-        color: var(--wo-dash-text);
-    }
-    .wo-help-item:last-child {
-        border-bottom: none;
-    }
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 6px;
+            border-radius: 14px;
+            color: #8ea19e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
 
-    .btn-neon-primary {
-        background-color: #4ade80;
-        color: #064e3b;
-        border: none;
-        font-weight: 600;
-        transition: all 0.2s;
-    }
-    .btn-neon-primary:hover {
-        background-color: #22c55e;
-        color: #064e3b;
-        transform: translateY(-1px);
-    }
+        .nav-btn i {
+            font-size: 1.3rem;
+        }
 
-    .btn-dash-outline {
-        background-color: transparent;
-        border: 1px solid var(--wo-dash-border);
-        color: var(--wo-dash-text);
-        font-weight: 600;
-        transition: all 0.2s;
-    }
-    .btn-dash-outline:hover {
-        background-color: var(--wo-dash-hover);
-        color: var(--wo-dash-text);
-    }
-    
-    .ai-tool-card {
-        border: 1px solid var(--wo-dash-border);
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        background-color: var(--wo-dash-card);
-    }
-    .ai-tool-card:hover {
-        border-color: #4ade80;
-        box-shadow: 0 4px 12px rgba(74, 222, 128, 0.1);
-        transform: translateY(-2px);
-    }
-</style>
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255,255,255,0.06);
+            color: #ffffff;
+        }
 
-<div class="wo-dashboard">
-    
-    <!-- Stats Row -->
-    <div class="d-flex gap-3 mb-4 overflow-auto pb-2 hide-scrollbar">
-        <div class="wo-stat-box">
-            <div class="d-flex align-items-center gap-2 mb-1" style="color: var(--wo-dash-muted);">
-                <i class="bi bi-globe"></i> <span class="small fw-medium">Domains</span>
-            </div>
-            <div class="fs-4 fw-bold">{$clientsstats.numactivedomains}</div>
-        </div>
-        <div class="wo-stat-box">
-            <div class="d-flex align-items-center gap-2 mb-1" style="color: var(--wo-dash-muted);">
-                <i class="bi bi-hdd-network"></i> <span class="small fw-medium">Hosting</span>
-            </div>
-            <div class="fs-4 fw-bold">{$clientsstats.productsnumactive}</div>
-        </div>
-        <div class="wo-stat-box">
-            <div class="d-flex align-items-center gap-2 mb-1" style="color: var(--wo-dash-muted);">
-                <i class="bi bi-window-desktop"></i> <span class="small fw-medium">Websites</span>
-            </div>
-            <div class="fs-4 fw-bold">0</div>
-        </div>
-        <div class="wo-stat-box">
-            <div class="d-flex align-items-center gap-2 mb-1" style="color: var(--wo-dash-muted);">
-                <i class="bi bi-envelope"></i> <span class="small fw-medium">Email & ...</span>
-            </div>
-            <div class="fs-4 fw-bold">0</div>
-        </div>
-        <div class="wo-stat-box">
-            <div class="d-flex align-items-center gap-2 mb-1" style="color: var(--wo-dash-muted);">
-                <i class="bi bi-grid-1x2"></i> <span class="small fw-medium">Applications</span>
-            </div>
-            <div class="fs-4 fw-bold">0</div>
-        </div>
-        <div class="wo-stat-box">
-            <div class="d-flex align-items-center gap-2 mb-1" style="color: var(--wo-dash-muted);">
-                <i class="bi bi-box"></i> <span class="small fw-medium">Other</span>
-            </div>
-            <div class="fs-4 fw-bold">0</div>
-        </div>
-    </div>
+        .sidebar-footer {
+            margin-top: auto;
+            font-size: 0.75rem;
+            color: #4a6a66;
+            padding-top: 2rem;
+        }
 
-    <!-- DEDICATED AI TOOLS DASHBOARD SECTION -->
-    <div class="row g-4 mb-4">
-        <!-- AI Tools List (Main Content) -->
-        <div class="col-lg-8">
-            <div class="wo-dash-card h-100 p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h5 class="fw-bold m-0">AI Tools Dashboard</h5>
-                        <p class="small m-0 mt-1" style="color: var(--wo-dash-muted);">Generate assets instantly using your credits.</p>
-                    </div>
-                    <a href="index.php?m=aitools" class="btn btn-sm btn-dash-outline d-none d-sm-inline-block">View All Tools</a>
-                </div>
-                
-                <div class="row g-3">
-                    <!-- Logo Generator -->
-                    <div class="col-md-6">
-                        <div class="ai-tool-card p-3 d-flex flex-column h-100">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="d-flex align-items-center gap-2">
-                                    <div class="bg-success bg-opacity-10 p-2 rounded-3">
-                                        <i class="bi bi-palette fs-5 text-success"></i>
-                                    </div>
-                                    <span class="fw-bold">Logo Generator</span>
-                                </div>
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill border">10 Credits</span>
-                            </div>
-                            <p class="small mb-3 mt-2 flex-grow-1" style="color: var(--wo-dash-muted);">Create professional, high-quality logos for your brand instantly.</p>
-                            <a href="index.php?m=aitools&action=logo" class="btn btn-sm btn-dash-outline w-100 fw-bold">Launch Tool</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Business Name Generator -->
-                    <div class="col-md-6">
-                        <div class="ai-tool-card p-3 d-flex flex-column h-100">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="d-flex align-items-center gap-2">
-                                    <div class="bg-primary bg-opacity-10 p-2 rounded-3">
-                                        <i class="bi bi-tag fs-5 text-primary"></i>
-                                    </div>
-                                    <span class="fw-bold">Name Generator</span>
-                                </div>
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill border">5 Credits</span>
-                            </div>
-                            <p class="small mb-3 mt-2 flex-grow-1" style="color: var(--wo-dash-muted);">Find the perfect, catchy name for your new business or project.</p>
-                            <a href="index.php?m=aitools&action=name" class="btn btn-sm btn-dash-outline w-100 fw-bold">Launch Tool</a>
-                        </div>
-                    </div>
+        /* ---------- TOP BAR ---------- */
+        .top-header {
+            position: fixed;
+            left: 280px;
+            right: 0;
+            top: 0;
+            height: 70px;
+            background: #02211e;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            z-index: 100;
+        }
 
-                    <!-- Branding Generator -->
-                    <div class="col-md-6">
-                        <div class="ai-tool-card p-3 d-flex flex-column h-100">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="d-flex align-items-center gap-2">
-                                    <div class="bg-warning bg-opacity-10 p-2 rounded-3">
-                                        <i class="bi bi-stars fs-5 text-warning"></i>
-                                    </div>
-                                    <span class="fw-bold">Branding Generator</span>
-                                </div>
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill border">15 Credits</span>
-                            </div>
-                            <p class="small mb-3 mt-2 flex-grow-1" style="color: var(--wo-dash-muted);">Generate full brand guidelines, color palettes, and typography.</p>
-                            <a href="index.php?m=aitools&action=branding" class="btn btn-sm btn-dash-outline w-100 fw-bold">Launch Tool</a>
-                        </div>
-                    </div>
+        .top-header .right {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
 
-                    <!-- AI Site Builder -->
-                    <div class="col-md-6">
-                        <div class="ai-tool-card p-3 d-flex flex-column h-100">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div class="d-flex align-items-center gap-2">
-                                    <div class="bg-info bg-opacity-10 p-2 rounded-3">
-                                        <i class="bi bi-window-desktop fs-5 text-info"></i>
-                                    </div>
-                                    <span class="fw-bold">AI Site Builder</span>
-                                </div>
-                                <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill border">50 Credits</span>
-                            </div>
-                            <p class="small mb-3 mt-2 flex-grow-1" style="color: var(--wo-dash-muted);">Describe your idea and let AI build a complete, working website.</p>
-                            <a href="index.php?m=aitools&action=sitebuilder" class="btn btn-sm btn-dash-outline w-100 fw-bold">Launch Tool</a>
-                        </div>
-                    </div>
+        .right-icon {
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #b4f53c;
+        }
 
-                    <!-- AI Image Generator (Full Width) -->
-                    <div class="col-12">
-                        <div class="ai-tool-card p-3 d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="bg-danger bg-opacity-10 p-3 rounded-3">
-                                    <i class="bi bi-image fs-4 text-danger"></i>
-                                </div>
-                                <div>
-                                    <div class="fw-bold d-flex align-items-center gap-2 mb-1">
-                                        AI Image Generator 
-                                        <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill border">5 Credits</span>
-                                    </div>
-                                    <div class="small" style="color: var(--wo-dash-muted);">Generate custom images, graphics, and illustrations from text prompts.</div>
-                                </div>
-                            </div>
-                            <a href="index.php?m=aitools&action=image" class="btn btn-dash-outline text-nowrap fw-bold px-4">Launch Tool</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        /* ---------- MAIN CONTENT ---------- */
+        .app-content {
+            margin-left: 280px;
+            padding: 100px 2.5rem 2.5rem;
+            width: 100%;
+        }
 
-        <!-- AI Credits Balance Card (Right-Hand Sidebar) -->
-        <div class="col-lg-4">
-            <div class="wo-dash-card h-100 p-4 d-flex flex-column justify-content-center align-items-center text-center position-relative overflow-hidden" style="background: linear-gradient(135deg, #0f3d2e, #071a16); color: white; border: none;">
-                <div class="position-relative z-1 w-100">
-                    <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
-                        <i class="bi bi-lightning-charge-fill fs-4" style="color: #4ade80;"></i>
-                        <h5 class="fw-bold m-0 text-white">AI Credits Balance</h5>
-                    </div>
-                    <div class="display-3 fw-bold mb-3" style="color: #4ade80; text-shadow: 0 0 20px rgba(74, 222, 128, 0.4);">
-                        {$ai_credits|default:'0'}
-                    </div>
-                    <p class="small opacity-75 mb-4">Use credits to power your AI generation tools. Credits are deducted per usage.</p>
-                    <a href="cart.php?a=add&pid=1" class="btn btn-neon-primary rounded-pill px-4 py-3 w-100 fw-bold shadow-lg">
-                        <i class="bi bi-cart-plus me-2"></i> Buy More Credits
-                    </a>
-                </div>
-                <!-- Decorative Background Element -->
-                <div class="position-absolute top-50 start-50 translate-middle opacity-10" style="font-size: 15rem; color: #4ade80;">
-                    <i class="bi bi-robot"></i>
-                </div>
-            </div>
-        </div>
-    </div>
+        /* ---------- STATS STRIP (hosting.com grid) ---------- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0 2rem;
+        }
 
-    <!-- Todos Section -->
-    <div class="wo-dash-card mb-4">
-        <div class="card-body p-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="fw-bold m-0">Todos</h5>
-                <span class="small fw-medium" style="color: var(--wo-dash-muted);">0/4 completed</span>
-            </div>
+        .stat-card {
+            background: #052a26;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            background: #07332e;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8ea19e;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* ---------- TODO / CHECKLIST ---------- */
+        .todo-card {
+            background: #052a26;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        /* ---------- BANNERS (modern gradients) ---------- */
+        .promo-banner {
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .banner-lime {
+            background: linear-gradient(105deg, #b4f53c, #6ee7a0);
+            color: #011d1a;
+        }
+
+        .banner-teal {
+            background: linear-gradient(105deg, #2dd4bf, #14b8a6);
+            color: #011d1a;
+        }
+
+        .btn-outline-light-custom {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 2rem;
+            padding: 0.5rem 1.2rem;
+            font-weight: 600;
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-outline-light-custom:hover {
+            background: rgba(0,0,0,0.4);
+        }
+
+        /* ---------- DARK CARDS (services, tickets, AI) ---------- */
+        .dark-card {
+            background: #052a26;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2rem;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Tables */
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .modern-table th {
+            text-align: left;
+            padding: 0.8rem 0;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #8ea19e;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .modern-table td {
+            padding: 0.9rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            background: rgba(180,245,60,0.15);
+            color: #b4f53c;
+            padding: 0.2rem 0.7rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* AI Tools Grid */
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .ai-tool-item {
+            background: #07332e;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .ai-tool-item:hover {
+            background: #0a423c;
+            transform: translateY(-2px);
+        }
+
+        /* Domain search input */
+        .domain-input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border-radius: 1.2rem;
+            background: #021b18;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .domain-input:focus {
+            outline: none;
+            border-color: #b4f53c;
+        }
+
+        /* Two columns */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .app-sidebar { width: 240px; }
+            .top-header { left: 240px; }
+            .app-content { margin-left: 240px; padding: 100px 1.5rem 1.5rem; }
+        }
+
+        @media (max-width: 800px) {
+            .app-sidebar { display: none; }
+            .top-header { left: 0; }
+            .app-content { margin-left: 0; }
+            .two-col { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+
+    <!-- SIDEBAR (hosting.com style) -->
+    <aside class="app-sidebar">
+        <div class="sidebar-brand">WebOceanX</div>
+        <nav style="flex:1;">
+            <a href="clientarea.php" class="nav-btn active"><i class="bi bi-house-door"></i> Dashboard</a>
             
-            <div class="d-flex p-1 rounded-3 mb-4" style="background-color: var(--wo-dash-tab-bg);">
-                <div class="flex-fill text-center py-2 rounded-2 fw-semibold" style="cursor:pointer; color: var(--wo-dash-muted);">
-                    Product setup <i class="bi bi-check-circle-fill text-success ms-1"></i>
-                </div>
-                <div class="flex-fill text-center py-2 rounded-2 fw-semibold" style="background-color: var(--wo-dash-tab-active); cursor:pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                    Account setup <span class="badge bg-secondary rounded-pill ms-1">4</span>
+            <!-- Collapsible AI Tools -->
+            <div style="margin: 0.5rem 0;">
+                <a href="#aiToolsMenu" data-bs-toggle="collapse" class="nav-btn" style="justify-content: space-between; margin-bottom: 0;">
+                    <span style="display:flex; align-items:center; gap:12px;"><i class="bi bi-cpu"></i> AI Studio</span>
+                    <i class="bi bi-chevron-down" style="font-size: 0.8rem;"></i>
+                </a>
+                <div class="collapse show" id="aiToolsMenu" style="margin-left: 1rem; border-left: 1px solid rgba(255,255,255,0.05); padding-left: 0.5rem; margin-top: 0.5rem;">
+                    <a href="index.php?m=aitools" class="nav-btn" style="font-size: 0.85rem; padding: 8px 12px; margin-bottom: 2px;"><i class="bi bi-grid"></i> Dashboard</a>
+                    <a href="index.php?m=aitools&action=logo" class="nav-btn" style="font-size: 0.85rem; padding: 8px 12px; margin-bottom: 2px;"><i class="bi bi-palette"></i> Logo Generator</a>
+                    <a href="index.php?m=aitools&action=name" class="nav-btn" style="font-size: 0.85rem; padding: 8px 12px; margin-bottom: 2px;"><i class="bi bi-tag"></i> Business Name</a>
+                    <a href="index.php?m=aitools&action=branding" class="nav-btn" style="font-size: 0.85rem; padding: 8px 12px; margin-bottom: 2px;"><i class="bi bi-stars"></i> Branding</a>
+                    <a href="index.php?m=aitools&action=sitebuilder" class="nav-btn" style="font-size: 0.85rem; padding: 8px 12px; margin-bottom: 2px;"><i class="bi bi-window-desktop"></i> Site Builder</a>
+                    <a href="index.php?m=aitools&action=image" class="nav-btn" style="font-size: 0.85rem; padding: 8px 12px; margin-bottom: 2px;"><i class="bi bi-image"></i> Image Gen</a>
                 </div>
             </div>
 
-            <div class="d-flex flex-column gap-3">
-                <a href="clientarea.php?action=security" class="wo-todo-item d-flex align-items-center gap-3 p-3">
-                    <i class="bi bi-shield-check fs-5" style="color: var(--wo-dash-muted);"></i>
-                    <div class="flex-fill">
-                        <div class="fw-semibold mb-1">Enable 2FA</div>
-                        <div class="small" style="color: var(--wo-dash-muted);">Add an extra layer of security to protect your account</div>
-                    </div>
-                    <i class="bi bi-arrow-up-right" style="color: var(--wo-dash-muted);"></i>
-                </a>
-                
-                <a href="clientarea.php?action=creditcard" class="wo-todo-item d-flex align-items-center gap-3 p-3">
-                    <i class="bi bi-credit-card fs-5" style="color: var(--wo-dash-muted);"></i>
-                    <div class="flex-fill">
-                        <div class="fw-semibold mb-1">Add a payment method</div>
-                        <div class="small" style="color: var(--wo-dash-muted);">Securely store a card to make future purchases faster</div>
-                    </div>
-                    <i class="bi bi-arrow-up-right" style="color: var(--wo-dash-muted);"></i>
-                </a>
-                
-                <a href="clientarea.php?action=details" class="wo-todo-item d-flex align-items-center gap-3 p-3">
-                    <i class="bi bi-globe-americas fs-5" style="color: var(--wo-dash-muted);"></i>
-                    <div class="flex-fill">
-                        <div class="fw-semibold mb-1">Add an address</div>
-                        <div class="small" style="color: var(--wo-dash-muted);">Add an address to your account</div>
-                    </div>
-                    <i class="bi bi-arrow-up-right" style="color: var(--wo-dash-muted);"></i>
-                </a>
-                
-                <a href="clientarea.php?action=details" class="wo-todo-item d-flex align-items-center gap-3 p-3">
-                    <i class="bi bi-telephone fs-5" style="color: var(--wo-dash-muted);"></i>
-                    <div class="flex-fill">
-                        <div class="fw-semibold mb-1">Add a phone number</div>
-                        <div class="small" style="color: var(--wo-dash-muted);">Add a phone number to your account for security and verification</div>
-                    </div>
-                    <i class="bi bi-arrow-up-right" style="color: var(--wo-dash-muted);"></i>
-                </a>
-            </div>
+            <a href="clientarea.php?action=services" class="nav-btn"><i class="bi bi-box-seam"></i> Services</a>
+            <a href="clientarea.php?action=domains" class="nav-btn"><i class="bi bi-globe2"></i> Domains</a>
+            <a href="clientarea.php?action=invoices" class="nav-btn"><i class="bi bi-receipt"></i> Billing</a>
+            <a href="supporttickets.php" class="nav-btn"><i class="bi bi-chat-dots"></i> Support</a>
+        </nav>
+        <div class="sidebar-footer">
+            <i class="bi bi-shield-check"></i> System status: All systems operational
         </div>
-    </div>
+    </aside>
 
-    <!-- Promo Banners -->
-    <div class="rounded-4 p-4 mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3" style="background-color: #bbf7d0; color: #166534;">
+    <!-- TOP BAR (no WHMCS elements) -->
+    <div class="top-header">
         <div>
-            <h5 class="fw-bold mb-1">Find the right product for you</h5>
-            <p class="mb-0 small opacity-75 fw-medium">Browse our complete catalogue to discover the tools and services to power your online presence.</p>
+            <a href="cart.php" class="btn-outline-light-custom" style="background:#b4f53c; color:#011d1a; border:none;">+ New Order</a>
         </div>
-        <a href="cart.php" class="btn bg-white text-dark fw-bold rounded-3 px-4 py-2 d-flex align-items-center gap-2 shadow-sm">
-            <i class="bi bi-arrow-up-right"></i> Browse products
-        </a>
+        <div class="right">
+            <span class="right-icon"><i class="bi bi-question-circle"></i></span>
+            <span class="right-icon"><i class="bi bi-bell"></i></span>
+            <span class="right-icon"><i class="bi bi-person-circle"></i></span>
+        </div>
     </div>
 
-    <!-- Domain Search -->
-    <div class="rounded-4 p-4 mb-4" style="background-color: #064e3b; color: white;">
-        <h5 class="fw-bold mb-1">Lock in a new domain for your business</h5>
-        <p class="small opacity-75 mb-4 fw-medium">Search for the perfect domain to represent your brand or business.</p>
-        
-        <form action="domainchecker.php" method="post">
-            <div class="d-flex bg-white rounded-3 p-1 align-items-center">
-                <input type="text" name="domain" class="form-control border-0 shadow-none py-2 px-3" placeholder="Start with a domain" style="background: transparent; color: #0f172a; font-weight: 500;">
-                <button type="submit" class="btn text-muted px-3"><i class="bi bi-search"></i></button>
+    <!-- MAIN CONTENT -->
+    <main class="app-content">
+
+        <!-- Welcome -->
+        <div style="margin-bottom: 1rem;">
+            <h1 style="font-size: 1.8rem; font-weight: 600;">Welcome, {$clientname}</h1>
+            <p style="color: #8ea19e;">Manage your hosting, AI tools, and billing from one dashboard.</p>
+        </div>
+
+        <!-- STATS CARDS (like hosting.com) -->
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-label">Domains</div><div class="stat-number">{$clientsstats.numactivedomains|default:0}</div></div>
+            <div class="stat-card"><div class="stat-label">Hosting Plans</div><div class="stat-number">{$clientsstats.productsnumactive|default:0}</div></div>
+            <div class="stat-card"><div class="stat-label">Active Tickets</div><div class="stat-number">{$clientsstats.numactivetickets|default:0}</div></div>
+            <div class="stat-card"><div class="stat-label">Unpaid Invoices</div><div class="stat-number">{$clientsstats.numunpaidinvoices|default:0}</div></div>
+            <div class="stat-card"><div class="stat-label">AI Credits</div><div class="stat-number">{$ai_credits|default:'0'}</div></div>
+        </div>
+
+        <!-- TODO / QUICK ACTIONS (security checklist) -->
+        <div class="todo-card">
+            <div class="section-header" style="margin-bottom: 0.5rem;">
+                <span class="section-title"><i class="bi bi-check2-square"></i> Security checklist</span>
             </div>
-        </form>
-    </div>
+            <div class="todo-item"><div><i class="bi bi-shield-lock"></i> Enable two‑factor authentication</div> <i class="bi bi-arrow-right"></i></div>
+            <div class="todo-item"><div><i class="bi bi-credit-card"></i> Add a payment method</div> <i class="bi bi-arrow-right"></i></div>
+            <div class="todo-item"><div><i class="bi bi-house-door"></i> Verify your address</div> <i class="bi bi-arrow-right"></i></div>
+            <div class="todo-item"><div><i class="bi bi-telephone"></i> Add phone number</div> <i class="bi bi-arrow-right"></i></div>
+        </div>
 
+        <!-- PROMO BANNERS (modern) -->
+        <div class="promo-banner banner-lime">
+            <div><strong>🚀 Find the right product for you</strong><br>Browse our complete catalogue</div>
+            <a href="cart.php" class="btn-outline-light-custom">Browse products →</a>
+        </div>
+        <div class="promo-banner banner-teal">
+            <div><strong>🤖 Build your app with AI</strong><br>Generate websites, logos & more</div>
+            <a href="index.php?m=aitools" class="btn-outline-light-custom">Launch AI Studio →</a>
+        </div>
+
+        <!-- DOMAIN SEARCH CARD -->
+        <div class="dark-card">
+            <h4 style="margin-bottom: 0.75rem;"><i class="bi bi-search"></i> Find your perfect domain</h4>
+            <form action="domainchecker.php" method="post">
+                <input type="text" name="domain" class="domain-input" placeholder="yourbrand.com">
+                <button type="submit" style="display: none;"></button>
+            </form>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #8ea19e;">Prices start at $9.99/year</div>
+        </div>
+
+        <!-- TWO COLUMN: Active Services + AI Tools / Recent Tickets -->
+        <div class="two-col">
+            <!-- LEFT: Active Services -->
+            <div class="dark-card">
+                <div class="section-header">
+                    <span class="section-title"><i class="bi bi-hdd-stack"></i> Active Services</span>
+                    <a href="clientarea.php?action=services" class="btn-ghost">View all</a>
+                </div>
+                <table class="modern-table">
+                    <thead>
+                        <tr><th>Product</th><th>Next Due</th><th>Status</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        {foreach $services as $service}
+                            {if $service@iteration <= 3}
+                            <tr>
+                                <td><strong>{$service.product}</strong><br><span style="font-size:0.7rem; color:#8ea19e;">{$service.domain}</span></td>
+                                <td>{$service.nextduedate}</td>
+                                <td><span class="status-badge">{$service.status}</span></td>
+                                <td><a href="clientarea.php?action=productdetails&id={$service.id}" class="btn-ghost" style="padding:0.2rem 0.8rem;">Manage</a></td>
+                            </tr>
+                            {/if}
+                        {foreachelse}
+                            <tr><td colspan="4" style="text-align:center; padding:2rem;">No active services. <a href="cart.php" style="color:#b4f53c;">Order now</a></td></tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- RIGHT: AI Tools Quick Access -->
+            <div class="dark-card">
+                <div class="section-header">
+                    <span class="section-title"><i class="bi bi-stars"></i> AI Tools</span>
+                    <a href="index.php?m=aitools" class="btn-ghost">All tools</a>
+                </div>
+                <div class="ai-grid">
+                    <div class="ai-tool-item">
+                        <div style="margin-bottom:0.5rem;"><i class="bi bi-palette" style="color:#b4f53c;"></i> <strong>Logo Generator</strong></div>
+                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">10 credits</div>
+                        <a href="index.php?m=aitools&action=logo" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
+                    </div>
+                    <div class="ai-tool-item">
+                        <div style="margin-bottom:0.5rem;"><i class="bi bi-tag" style="color:#b4f53c;"></i> <strong>Business Name Generator</strong></div>
+                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">5 credits</div>
+                        <a href="index.php?m=aitools&action=name" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
+                    </div>
+                    <div class="ai-tool-item">
+                        <div style="margin-bottom:0.5rem;"><i class="bi bi-stars" style="color:#b4f53c;"></i> <strong>Branding Generator</strong></div>
+                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">15 credits</div>
+                        <a href="index.php?m=aitools&action=branding" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
+                    </div>
+                    <div class="ai-tool-item">
+                        <div style="margin-bottom:0.5rem;"><i class="bi bi-window-desktop" style="color:#b4f53c;"></i> <strong>AI Site Builder</strong></div>
+                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">50 credits</div>
+                        <a href="index.php?m=aitools&action=sitebuilder" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
+                    </div>
+                    <div class="ai-tool-item">
+                        <div style="margin-bottom:0.5rem;"><i class="bi bi-image" style="color:#b4f53c;"></i> <strong>AI Image Generator</strong></div>
+                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">5 credits</div>
+                        <a href="index.php?m=aitools&action=image" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
+                    </div>
+                </div>
+                <div style="margin-top:1.5rem; background:#021b18; border-radius:1rem; padding:1.2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border: 1px solid rgba(180,245,60,0.2);">
+                    <div>
+                        <i class="bi bi-lightning-charge" style="color:#b4f53c; font-size: 1.2rem;"></i> <span style="color:#8ea19e; margin-left: 0.3rem;">Credits balance:</span> <strong style="font-size:1.4rem; color: #fff; margin-left: 0.5rem;">{$ai_credits|default:'0'}</strong>
+                    </div>
+                    <a href="cart.php?a=add&pid=1" class="btn-outline-light-custom" style="background:#b4f53c; color:#011d1a; border:none; padding:0.6rem 1.2rem; font-weight: 700; box-shadow: 0 4px 15px rgba(180,245,60,0.3);">Buy More Credits</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECENT TICKETS & ANNOUNCEMENTS (two more columns) -->
+        <div class="two-col" style="margin-top: 0.5rem;">
+            <div class="dark-card">
+                <div class="section-header">
+                    <span class="section-title"><i class="bi bi-chat"></i> Recent Support Tickets</span>
+                    <a href="supporttickets.php" class="btn-ghost">All tickets</a>
+                </div>
+                <table class="modern-table">
+                    <thead><tr><th>Subject</th><th>Status</th><th></th></tr></thead>
+                    <tbody>
+                        {foreach $tickets as $ticket}
+                            {if $ticket@iteration <= 3}
+                            <tr>
+                                <td><a href="viewticket.php?tid={$ticket.tid}&c={$ticket.c}" style="color:white; text-decoration:none;">#{$ticket.tid} - {$ticket.subject}</a></td>
+                                <td><span class="status-badge">{$ticket.status}</span></td>
+                                <td><a href="viewticket.php?tid={$ticket.tid}&c={$ticket.c}" class="btn-ghost">View</a></td>
+                            </tr>
+                            {/if}
+                        {foreachelse}
+                            <tr><td colspan="3" style="text-align:center;">No open tickets</td></tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+            <div class="dark-card">
+                <div class="section-header">
+                    <span class="section-title"><i class="bi bi-megaphone"></i> Announcements</span>
+                    <a href="announcements.php" class="btn-ghost">View all</a>
+                </div>
+                {foreach $announcements as $announcement}
+                    {if $announcement@iteration <= 2}
+                    <div style="margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:0.8rem;">
+                        <div style="display:flex; justify-content:space-between;"><strong>{$announcement.title}</strong> <span style="font-size:0.7rem;">{$announcement.date}</span></div>
+                        <div style="font-size:0.8rem; color:#8ea19e;">{$announcement.text|truncate:100}</div>
+                        <a href="announcements.php?id={$announcement.id}" style="color:#b4f53c; font-size:0.75rem;">Read more →</a>
+                    </div>
+                    {/if}
+                {foreachelse}
+                    <div>No recent announcements.</div>
+                {/foreach}
+            </div>
+        </div>
+
+        <!-- RECENT INVOICES (full width optional) -->
+        <div class="dark-card" style="margin-top: 0;">
+            <div class="section-header">
+                <span class="section-title"><i class="bi bi-receipt"></i> Recent Invoices</span>
+                <a href="clientarea.php?action=invoices" class="btn-ghost">All invoices</a>
+            </div>
+            <table class="modern-table">
+                <thead><tr><th>Invoice #</th><th>Date</th><th>Total</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                    {foreach $invoices as $invoice}
+                        {if $invoice@iteration <= 4}
+                        <tr>
+                            <td><a href="viewinvoice.php?id={$invoice.id}" style="color:white;">{$invoice.invoicenum}</a></td>
+                            <td>{$invoice.datecreated}</td>
+                            <td>{$invoice.total}</td>
+                            <td><span class="status-badge" style="{if $invoice.status == 'Paid'}background:#1f5c4b; color:#b4f53c;{elseif $invoice.status == 'Unpaid'}background:#7a2e2e; color:#ff8a8a;{/if}">{$invoice.status}</span></td>
+                            <td><a href="viewinvoice.php?id={$invoice.id}" class="btn-ghost">View</a></td>
+                        </tr>
+                        {/if}
+                    {foreachelse}
+                        <tr><td colspan="5" style="text-align:center;">No invoices found</td></tr>
+                    {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </main>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
