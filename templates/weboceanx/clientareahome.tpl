@@ -292,13 +292,16 @@
         .ai-tool-item {
             background: #07332e;
             border-radius: 1.2rem;
-            padding: 1rem;
-            transition: all 0.2s;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.02);
         }
 
         .ai-tool-item:hover {
             background: #0a423c;
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            border-color: rgba(180,245,60,0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         /* Domain search input */
@@ -426,14 +429,17 @@
             <a href="index.php?m=aitools" class="btn-outline-light-custom">Launch AI Studio →</a>
         </div>
 
-        <!-- DOMAIN SEARCH CARD -->
-        <div class="dark-card">
-            <h4 style="margin-bottom: 0.75rem;"><i class="bi bi-search"></i> Find your perfect domain</h4>
-            <form action="domainchecker.php" method="post">
-                <input type="text" name="domain" class="domain-input" placeholder="yourbrand.com">
-                <button type="submit" style="display: none;"></button>
-            </form>
-            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #8ea19e;">Prices start at $9.99/year</div>
+        <!-- PROMINENT DOMAIN SEARCH -->
+        <div class="dark-card" style="padding: 2.5rem; text-align: center; position: relative; overflow: hidden; border: 1px solid rgba(180,245,60,0.1);">
+            <div style="position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(180,245,60,0.1) 0%, rgba(1,29,26,0) 70%); z-index: 0;"></div>
+            <div style="position: relative; z-index: 1;">
+                <h3 style="font-weight: 700; margin-bottom: 0.5rem;"><i class="bi bi-search" style="color: #b4f53c;"></i> Find your perfect domain</h3>
+                <p style="color: #8ea19e; margin-bottom: 1.5rem;">Search for availability and secure your digital identity today.</p>
+                <form action="domainchecker.php" method="post" style="display: flex; max-width: 600px; margin: 0 auto; background: #021b18; border: 2px solid rgba(180,245,60,0.3); border-radius: 100px; padding: 0.4rem; transition: all 0.3s;" onfocusin="this.style.borderColor='#b4f53c'; this.style.boxShadow='0 0 20px rgba(180,245,60,0.15)';" onfocusout="this.style.borderColor='rgba(180,245,60,0.3)'; this.style.boxShadow='none';">
+                    <input type="text" name="domain" placeholder="Enter your ideal domain name..." required style="flex: 1; background: transparent; border: none; color: #ffffff; padding: 0.8rem 1.5rem; outline: none; font-size: 1.1rem;">
+                    <button type="submit" style="background: #b4f53c; color: #011d1a; border: none; border-radius: 100px; padding: 0 2rem; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#9be026'; this.style.transform='scale(1.02)';" onmouseout="this.style.background='#b4f53c'; this.style.transform='none';">Search</button>
+                </form>
+            </div>
         </div>
 
         <!-- TWO COLUMN: Active Services + AI Tools / Recent Tickets -->
@@ -472,37 +478,86 @@
                     <a href="index.php?m=aitools" class="btn-ghost">All tools</a>
                 </div>
                 <div class="ai-grid">
-                    <div class="ai-tool-item">
-                        <div style="margin-bottom:0.5rem;"><i class="bi bi-palette" style="color:#b4f53c;"></i> <strong>Logo Generator</strong></div>
-                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">10 credits</div>
-                        <a href="index.php?m=aitools&action=logo" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
-                    </div>
-                    <div class="ai-tool-item">
-                        <div style="margin-bottom:0.5rem;"><i class="bi bi-tag" style="color:#b4f53c;"></i> <strong>Business Name Generator</strong></div>
-                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">5 credits</div>
-                        <a href="index.php?m=aitools&action=name" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
-                    </div>
-                    <div class="ai-tool-item">
-                        <div style="margin-bottom:0.5rem;"><i class="bi bi-stars" style="color:#b4f53c;"></i> <strong>Branding Generator</strong></div>
-                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">15 credits</div>
-                        <a href="index.php?m=aitools&action=branding" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
-                    </div>
-                    <div class="ai-tool-item">
-                        <div style="margin-bottom:0.5rem;"><i class="bi bi-window-desktop" style="color:#b4f53c;"></i> <strong>AI Site Builder</strong></div>
-                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">50 credits</div>
-                        <a href="index.php?m=aitools&action=sitebuilder" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
-                    </div>
-                    <div class="ai-tool-item">
-                        <div style="margin-bottom:0.5rem;"><i class="bi bi-image" style="color:#b4f53c;"></i> <strong>AI Image Generator</strong></div>
-                        <div style="font-size:0.75rem; color:#8ea19e; margin-bottom:0.8rem;">5 credits</div>
-                        <a href="index.php?m=aitools&action=image" class="btn-ghost" style="display:block; text-align:center; padding:0.4rem;">Launch Tool</a>
-                    </div>
+                    <a href="index.php?m=aitools&action=logo" class="ai-tool-item" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                            <div style="background: rgba(180,245,60,0.1); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-palette" style="color:#b4f53c; font-size: 1.2rem;"></i>
+                            </div>
+                            <strong style="font-size: 1.05rem; color: #fff;">Logo Generator</strong>
+                        </div>
+                        <div style="font-size:0.85rem; color:#8ea19e; margin-bottom:1.2rem; flex-grow: 1;">Create professional logos instantly.</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                            <span style="font-size:0.8rem; color:#b4f53c; font-weight: 600;"><i class="bi bi-lightning-charge-fill"></i> 10 credits</span>
+                            <span style="font-size:0.85rem; color:#fff; font-weight: 500;">Launch <i class="bi bi-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <a href="index.php?m=aitools&action=name" class="ai-tool-item" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                            <div style="background: rgba(180,245,60,0.1); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-tag" style="color:#b4f53c; font-size: 1.2rem;"></i>
+                            </div>
+                            <strong style="font-size: 1.05rem; color: #fff;">Business Name</strong>
+                        </div>
+                        <div style="font-size:0.85rem; color:#8ea19e; margin-bottom:1.2rem; flex-grow: 1;">Generate catchy brand names.</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                            <span style="font-size:0.8rem; color:#b4f53c; font-weight: 600;"><i class="bi bi-lightning-charge-fill"></i> 5 credits</span>
+                            <span style="font-size:0.85rem; color:#fff; font-weight: 500;">Launch <i class="bi bi-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <a href="index.php?m=aitools&action=branding" class="ai-tool-item" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                            <div style="background: rgba(180,245,60,0.1); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-stars" style="color:#b4f53c; font-size: 1.2rem;"></i>
+                            </div>
+                            <strong style="font-size: 1.05rem; color: #fff;">Branding Kit</strong>
+                        </div>
+                        <div style="font-size:0.85rem; color:#8ea19e; margin-bottom:1.2rem; flex-grow: 1;">Full brand identity generation.</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                            <span style="font-size:0.8rem; color:#b4f53c; font-weight: 600;"><i class="bi bi-lightning-charge-fill"></i> 15 credits</span>
+                            <span style="font-size:0.85rem; color:#fff; font-weight: 500;">Launch <i class="bi bi-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <a href="index.php?m=aitools&action=sitebuilder" class="ai-tool-item" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                            <div style="background: rgba(180,245,60,0.1); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-window-desktop" style="color:#b4f53c; font-size: 1.2rem;"></i>
+                            </div>
+                            <strong style="font-size: 1.05rem; color: #fff;">AI Site Builder</strong>
+                        </div>
+                        <div style="font-size:0.85rem; color:#8ea19e; margin-bottom:1.2rem; flex-grow: 1;">Build a complete website with AI.</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                            <span style="font-size:0.8rem; color:#b4f53c; font-weight: 600;"><i class="bi bi-lightning-charge-fill"></i> 50 credits</span>
+                            <span style="font-size:0.85rem; color:#fff; font-weight: 500;">Launch <i class="bi bi-arrow-right"></i></span>
+                        </div>
+                    </a>
+                    <a href="index.php?m=aitools&action=image" class="ai-tool-item" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                        <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                            <div style="background: rgba(180,245,60,0.1); width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-image" style="color:#b4f53c; font-size: 1.2rem;"></i>
+                            </div>
+                            <strong style="font-size: 1.05rem; color: #fff;">Image Gen</strong>
+                        </div>
+                        <div style="font-size:0.85rem; color:#8ea19e; margin-bottom:1.2rem; flex-grow: 1;">Generate custom stock photos.</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05);">
+                            <span style="font-size:0.8rem; color:#b4f53c; font-weight: 600;"><i class="bi bi-lightning-charge-fill"></i> 5 credits</span>
+                            <span style="font-size:0.85rem; color:#fff; font-weight: 500;">Launch <i class="bi bi-arrow-right"></i></span>
+                        </div>
+                    </a>
                 </div>
-                <div style="margin-top:1.5rem; background:#021b18; border-radius:1rem; padding:1.2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border: 1px solid rgba(180,245,60,0.2);">
-                    <div>
-                        <i class="bi bi-lightning-charge" style="color:#b4f53c; font-size: 1.2rem;"></i> <span style="color:#8ea19e; margin-left: 0.3rem;">Credits balance:</span> <strong style="font-size:1.4rem; color: #fff; margin-left: 0.5rem;">{$ai_credits|default:'0'}</strong>
+                <div style="margin-top:1.5rem; background: linear-gradient(135deg, #052a26 0%, #0a423c 100%); border-radius:1.2rem; padding:1.8rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem; border: 1px solid rgba(180,245,60,0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="background: rgba(180,245,60,0.15); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-lightning-charge-fill" style="color:#b4f53c; font-size: 2rem;"></i>
+                        </div>
+                        <div>
+                            <div style="color:#8ea19e; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 0.2rem;">Available AI Credits</div>
+                            <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                                <strong style="font-size:2.5rem; color: #fff; line-height: 1;">{$ai_credits|default:'0'}</strong>
+                                <span style="color: #b4f53c; font-size: 0.9rem; font-weight: 500;">Credits ready to use</span>
+                            </div>
+                        </div>
                     </div>
-                    <a href="cart.php?a=add&pid=1" class="btn-outline-light-custom" style="background:#b4f53c; color:#011d1a; border:none; padding:0.6rem 1.2rem; font-weight: 700; box-shadow: 0 4px 15px rgba(180,245,60,0.3);">Buy More Credits</a>
+                    <a href="cart.php?a=add&pid=1" style="background:#b4f53c; color:#011d1a; border:none; border-radius: 100px; padding:0.8rem 2rem; font-weight: 800; font-size: 1.1rem; text-decoration: none; box-shadow: 0 0 20px rgba(180,245,60,0.4); transition: all 0.2s;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(180,245,60,0.6)';" onmouseout="this.style.transform='none'; this.style.boxShadow='0 0 20px rgba(180,245,60,0.4)';">Buy More Credits</a>
                 </div>
             </div>
         </div>
